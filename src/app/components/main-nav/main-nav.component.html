@@ -11,6 +11,7 @@
       ><span>Home</span></a
     >
     <a routerLinkActive="active" routerLink="/test"><span>Quiz</span></a>
+    <a routerLinkActive="active" routerLink="/user"><span>Users</span></a>
     <a routerLinkActive="active" routerLink="/results"><span>Results</span></a>
     <a routerLinkActive="active" *ngIf="!isLoggedinUser ; else loggedinUser" routerLink="/login">SignUp</a>
     <ng-template #loggedinUser>

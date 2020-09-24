@@ -1,0 +1,5 @@
+<main *ngIf="user" class="width-container">
+    <h1>{{user.name}}</h1>
+    <h2>Quizs:</h2>
+    <test-list class="test-list" [tests]="user.tests"></test-list>
+</main>

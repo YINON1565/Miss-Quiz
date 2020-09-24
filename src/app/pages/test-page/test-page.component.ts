@@ -11,10 +11,13 @@ export class TestPageComponent implements OnInit {
   constructor(private testService: TestService) {}
   public tests: Test[];
   ngOnInit(): void {
-    console.log('hi');
-    
+    this._loadTests()
+  }
+  
+  private _loadTests() : void {
     this.testService.query().subscribe((tests) => (this.tests = tests));
   }
+
   public onCheckedTest(testId: string): void {
     this.testService.getById(testId).subscribe()
   }

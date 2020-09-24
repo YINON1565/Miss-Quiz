@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
   //CREATED
   ngOnInit(): void {
     this._loadUser();
-    this._authService.getLoggeinUser()? this._router.navigate(['/']): ''
+    this._authService.userValue ? this._router.navigate(['/']): ''
     // this.userForm.valueChanges.subscribe(x=> console.log(x))
   }
 
@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
     this.registerForm = new FormGroup({
       name: new FormControl(user.name, Validators.minLength(2)),
       email: new FormControl(user.email, [Validators.email, Validators.pattern(this._regEmail) ]),
-      password: new FormControl(user.password, [Validators.minLength(8), Validators.pattern(this._regPassword)]),
+      password: new FormControl(user.password, [ Validators.minLength(8), Validators.pattern(this._regPassword)]),
     });
     this.loginForm = new FormGroup({
       email: new FormControl(user.email, Validators.email),
@@ -76,7 +76,6 @@ export class LoginComponent implements OnInit {
   
 
   public getError(el) {
-    // console.log(this.formGroup.get('email'));
     const fromControl = this.formGroup.get(el)
     switch (el) {
       case 'name':
@@ -115,13 +114,13 @@ export class LoginComponent implements OnInit {
     !isValid ? this._handleError(): this.isSignup? this._signup(): this._login();
   }
 
-  private _checkIsAccountExists(email: string) {
-    this._userService.getByEmail(email).pipe(
-      tap((user) => {
-        user && user._id ? this._signup() : this._login();
-      })
-    );
-  }
+  // private _checkIsAccountExists(email: string) {
+  //   this._userService.getByEmail(email).pipe(
+  //     tap((user) => {
+  //       user && user._id ? this._signup() : this._login();
+  //     })
+  //   );
+  // }
 
   private _signup(): void {
     // this._userService.getByEmail(credantials.email).pipe(

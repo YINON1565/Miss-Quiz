@@ -1,0 +1,5 @@
+<user-preview
+  *ngFor="let user of users"
+  [user]="user"
+  routerLink="/user/{{ user._id }}"
+></user-preview>

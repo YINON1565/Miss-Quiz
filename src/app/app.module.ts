@@ -41,6 +41,10 @@ import { UtilService } from './services/util/util.service';
 import { MainNavComponent } from './components/main-nav/main-nav.component';
 import { MainHeaderComponent } from './components/main-header/main-header.component';
 import { LoginComponent } from './pages/login/login.component';
+import { UserPageComponent } from './pages/user-page/user-page.component';
+import { UserListComponent } from './components/user-list/user-list.component';
+import { UserPreviewComponent } from './components/user-preview/user-preview.component';
+import { UserDetailsComponent } from './pages/user-details/user-details.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +66,10 @@ import { LoginComponent } from './pages/login/login.component';
     MainNavComponent,
     MainHeaderComponent,
     LoginComponent,
+    UserPageComponent,
+    UserListComponent,
+    UserPreviewComponent,
+    UserDetailsComponent,
   ],
   imports: [
     // GENERAL

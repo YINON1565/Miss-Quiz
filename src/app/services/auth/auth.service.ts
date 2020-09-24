@@ -3,8 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Router } from '@angular/router';
 
-import { Observable, of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
 
 import { StorageService } from '../storage/storage.service';
 
@@ -12,45 +12,41 @@ import { User } from 'src/app/interfaces/user';
 import { UserLoginCred } from 'src/app/interfaces/user-login-cred';
 
 import { BASE_URL } from '../http/base-url';
-import { UserService } from '../user/user.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(
-    private _storageService: StorageService,
-    private _userService: UserService,
-    private _http: HttpClient,
-    private _router: Router
-  ) {}
-
+  // STATE
+  public KEY_LOGGEDIN = 'loggedin-user';
+  public userSubject: BehaviorSubject<User>;
+  public user: Observable<User>;
   private _httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
   private _url = `${BASE_URL}auth`;
 
-  // STATE
-  private _loggedinUser: User = this.getLoggeinUser();
-  private KEY_LOGGEDIN = 'loggedin-user';
+  constructor(
+    private _storageService: StorageService,
+    private _http: HttpClient,
+    private _router: Router
+  ) {
+    this.userSubject = new BehaviorSubject<User>(
+      this._storageService.loadSession(this.KEY_LOGGEDIN)
+    );
+    this.user = this.userSubject.asObservable();
+  }
 
   // GETTERS
-  // public get loggedinUser(): User {
-  //   return this._loggedinUser;
-  // }
+  public get userValue(): User {
+    return this.userSubject.value;
+  }
 
   // MUTATIONS
-  private _setLoggedinUser(user: User) {
-    this._loggedinUser = user;
-  }
-
-  public getLoggeinUser() {
-    return this._storageService.loadSession(this.KEY_LOGGEDIN);
-  }
 
   private _handleLogin(user: User) {
     try {
-      this._storageService.storeSession(this.KEY_LOGGEDIN, user);
+    this._storageService.storeSession(this.KEY_LOGGEDIN, user);
     } catch (err) {
       console.log('ERROR IN _handleLogin', err);
     }
@@ -78,54 +74,40 @@ export class AuthService {
   // ACTINOS
 
   public login(userLoginCred: UserLoginCred) {
-    return this._http
-      .post<User>(`${this._url}/login`, userLoginCred, this._httpOptions)
-      .pipe(
-        tap((user) => {
-          this._handleLogin(user);
-          this._setLoggedinUser(user);
-        }),
-        catchError(
-          this._handleError<User>(`login userLoginCred=${userLoginCred}`)
-        )
-      );
+    return this._http.post<User>(`${this._url}/login`, userLoginCred).pipe(
+      map((user: User) => {
+        this._handleLogin(user);
+        this.userSubject.next(user);
+        return user;
+      }),
+      catchError(
+        this._handleError<User>(`login userLoginCred=${userLoginCred}`)
+      )
+    );
   }
 
   public signup(userCred: User) {
-    // this._checkIsAccountExists(userCred.email)
     sessionStorage.clear();
-    return this._http
-      .post<User>(`${this._url}/signup`, userCred, this._httpOptions)
-      .pipe(
-        tap((user) => {
-          this._handleLogin(user);
-          this._setLoggedinUser(user);
-        }),
-        catchError(this._handleError<User>(`signup user=${this._url}`))
-      );
+    return this._http.post<User>(`${this._url}/signup`, userCred).pipe(
+      map((user: User) => {
+        this._handleLogin(user);
+        this.userSubject.next(user);
+        return user;
+      }),
+      catchError(this._handleError<User>(`signup user=${this._url}`))
+    );
   }
 
   public logout() {
-    console.log(`${this._url}/logout`, '`${this._url}/logout`');
-
     return this._http
       .post(`${this._url}/logout`, null, this._httpOptions)
       .subscribe((res: any) => {
         // const {message} = res
         sessionStorage.clear();
+        this.userSubject.next(null);
         this._router.navigate(['/login']);
       });
-    // .subscribe(
-    //   tap(_ => {
-    //     sessionStorage.clear();
-    //   }),
-    //   catchError(this._handleError('logout'))
-    // );
   }
-
-  // private _checkIsAccountExists(email) {
-  //   return this._userService.getByEmail(email)
-  // }
 
   public getEmptyUser(): User {
     return {
@@ -138,43 +120,4 @@ export class AuthService {
     };
   }
 
-  // public signUp(
-  //   name: string,
-  //   email: string,
-  //   password: string
-  // ): Observable<User> {
-  //   let user: User = {
-  //     name,
-  //     email,
-  //     password,
-  //     joinAt: null,
-  //     isAdmin: false,
-  //     tests: [],
-  //   };
-  //   this._storageService.store(this.KEY_USER, user);
-  //   return of(user);
-  // }
-
-  // public buildNewTest(test: Test) {
-  //   this.getUser().subscribe((user) => {
-
-  //     user.tests.push(test);
-  //     this._storageService.store(this.KEY_USER, user);
-  //   });
-
-  //   // return this.getUser().pipe(
-  //   //   tap((user) => {
-  //   //     user.tests.push(test);
-  //   //     this._storageService.store(this.KEY_USER, user);
-  //   //   })
-  //   // );
-  //   //   forkJoin(this.getUser(), this._testService.getById(testId)).subscribe(res=> {
-  //   //   res[0].tests.push(res[1])
-  //   //   this._storageService.store(this.KEY_USER, res[0]);
-  //   //  })
-  //   // return this._testService
-  //   //   .getById(testId)
-  //   //   .subscribe((test) => this._loggedinUser.tests.push(test)).unsubscribe();
-  //   // return of (this.getUser().subscribe(user=> user.tests.push(test)))
-  // }
 }
