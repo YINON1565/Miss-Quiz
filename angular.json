@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "online-test": {
+    "miss-quiz": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/online-test",
+            "outputPath": "dist/miss-quiz",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -66,18 +66,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "online-test:build"
+            "browserTarget": "miss-quiz:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "online-test:build:production"
+              "browserTarget": "miss-quiz:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "online-test:build"
+            "browserTarget": "miss-quiz:build"
           }
         },
         "test": {
@@ -114,15 +114,15 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "online-test:serve"
+            "devServerTarget": "miss-quiz:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "online-test:serve:production"
+              "devServerTarget": "miss-quiz:serve:production"
             }
           }
         }
       }
     }},
-  "defaultProject": "online-test"
+  "defaultProject": "miss-quiz"
 }
