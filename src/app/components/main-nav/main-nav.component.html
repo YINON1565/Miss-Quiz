@@ -1,0 +1,21 @@
+<nav class="width-container flex bet">
+  <a class="logo" routerLink="/" title="Home"
+    ><img src="assets/svg/puzzle-piece.svg" alt="Quiz" /> <span class="m-i-start-1ch">QUIZ</span>.
+  </a>
+  <div class="nav-link-container flex a-cente">
+    <!-- <div class="nav-link-container flex col" [class.open-menu]="isOpenMenu"> -->
+    <a
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      routerLink="/"
+      ><span>Home</span></a
+    >
+    <a routerLinkActive="active" routerLink="/test"><span>Quiz</span></a>
+    <a routerLinkActive="active" routerLink="/results"><span>Results</span></a>
+    <a routerLinkActive="active" *ngIf="!isLoggedinUser ; else loggedinUser" routerLink="/login">SignUp</a>
+    <ng-template #loggedinUser>
+      <a (click)="onLogout()">Logout</a>
+    </ng-template>
+    
+  </div>
+</nav>

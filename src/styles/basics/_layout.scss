@@ -1,0 +1,7 @@
+.width-container {
+    width: 100vw;
+    @include for-mobile-layout {
+        width: $break-mobile;
+        margin: 0 auto;
+    }
+}

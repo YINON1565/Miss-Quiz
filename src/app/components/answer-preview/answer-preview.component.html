@@ -1,0 +1,17 @@
+<h3
+  class="flex a-center"
+  [ngClass]="{
+    disable: isDisable,
+    answered: answeredIdx === idx,
+    'correct-answer': answer.isCorrect
+  }"
+>
+  <span>{{ idx + 1 }}:</span>
+  <my-checkbox
+    class="m-i-start-1ch m-i-end-1ch"
+    [value]="(answeredIdx || answeredIdx === 0) && answeredIdx === idx"
+    [idDisabled]="idDisabled"
+  ></my-checkbox>
+  {{ answer.answerContent }}
+</h3>
+<!-- <h3>{{answer.isCorrect}}</h3> -->

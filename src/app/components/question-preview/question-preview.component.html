@@ -1,0 +1,8 @@
+<h2>שם השאלה: {{ question.questionContent }}</h2>
+answered {{ question.answeredIdx }}
+<answer-list
+  [timeLeft]="timeLeft"
+  (cheackedAnswer)="cheackedAnswer($event)"
+  [answers]="question.answers"
+  [answeredIdx]="question.answeredIdx"
+></answer-list>

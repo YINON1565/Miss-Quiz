@@ -1,0 +1,11 @@
+@import '../../../styles.scss';
+
+
+.main-header {
+    position: sticky;
+    overflow: hidden;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.342);
+    width: 100%;
+    top: 0;
+    z-index: 10;
+}

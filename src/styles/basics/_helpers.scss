@@ -1,0 +1,272 @@
+.site-block {
+    margin-bottom: rem(20px);
+}
+
+// Aspect ratios
+
+.ratio-16-9 {
+    @include aspect-ratio(100, 56);
+}
+
+.ratio-square {
+    @include aspect-ratio(100, 100);
+}
+
+.ratio-card {
+    @include aspect-ratio(100, 80);
+}
+
+.ratio-poster {
+    @include aspect-ratio(100, 150);
+}
+
+// BOLD
+.bold {
+    font-weight: bold;
+}
+
+.bolder {
+    font-weight: bolder;
+}
+
+.lighter {
+    font-weight: lighter;
+}
+
+// FLEX
+
+.flex {
+    display: flex;
+}
+
+.inline-flex {
+    display: inline-flex;
+}
+
+.col {
+    flex-direction: column;
+}
+
+.row {
+    flex-direction: row;
+}
+
+.bet {
+    justify-content: space-between;
+}
+
+.around {
+    justify-content: space-around;
+}
+
+.evenly {
+    justify-content: space-evenly;
+}
+
+.j-center {
+    justify-content: center;
+}
+
+.j-end {
+    justify-content: flex-end;
+}
+
+.a-end {
+    align-items: flex-end;
+}
+
+.a-center {
+    align-items: center;
+}
+
+// CURSOR
+
+.pointer {
+    cursor: pointer;
+}
+
+.not-allowed,
+.disable {
+    cursor: not-allowed;
+}
+
+.cursor-initial {
+    cursor: initial;
+}
+
+// POSITIONS
+
+.relative {
+    position: relative;
+}
+.fixed {
+    position: fixed;
+}
+.absolute {
+    position: absolute;
+}
+.static {
+    position: static;
+}
+.sticky {
+    position: sticky;
+}
+
+// DISPLAYS
+
+.none {
+    display: none;
+}
+.grid {
+    display: grid;
+}
+.block {
+    display: block;
+}
+.inline-block {
+    display: inline-block;
+}
+
+// FONTS
+
+.monospace {
+    font-family: monospace;
+}
+
+// MARGINS
+
+.m-i-start-1ch {
+    margin-inline-start: 1ch;
+}
+.m-i-start-2ch {
+    margin-inline-start: 2ch;
+}
+.m-i-start-3ch {
+    margin-inline-start: 3ch;
+}
+
+.m-i-end-1ch {
+    margin-inline-end: 1ch;
+}
+.m-i-end-2ch {
+    margin-inline-end: 2ch;
+}
+.m-i-end-3ch {
+    margin-inline-end: 3ch;
+}
+
+.m-b-start-1ch {
+    margin-block-start: 1ch;
+}
+.m-b-start-2ch {
+    margin-block-start: 2ch;
+}
+.m-b-start-3ch {
+    margin-block-start: 3ch;
+}
+
+.m-b-end-1ch {
+    margin-block-end: 1ch;
+}
+.m-b-end-2ch {
+    margin-block-end: 2ch;
+}
+.m-b-end-3ch {
+    margin-block-end: 3ch;
+}
+
+// WIDTH AND HEIGHT
+
+.w100 {
+    width: 100%;
+}
+.h100 {
+    height: 100%;
+}
+
+// AVATAR
+
+.avatar {
+    border-radius: 50%;
+    background-color: $clr7;
+    transition: background-color 0.3s;
+    object-fit: cover;
+
+    &.isHorizonal {
+        object-fit: fill;
+    }
+
+    &.avatar-s {
+        width: 60px;
+        height: 60px;
+    }
+    &.avatar-m {
+        width: 100px;
+        height: 100px;
+    }
+    &.avatar-l {
+        width: 150px;
+        height: 150px;
+    }
+    &.anonymous {
+        // filter: $filter3;
+    }
+}
+
+.divider-line {
+    background-color: $clr3;
+    height: 0.5px;
+    width: 50%;
+    margin: 20px auto;
+}
+.divider-start-line {
+    background-color: $clr3;
+    height: 0.5px;
+    width: 25vw;
+    margin: 20px;
+}
+
+.cln-ul {
+    padding: 0;
+    margin: 0;
+}
+.cln-li {
+    list-style: none;
+}
+.cln-a {
+    text-decoration: none;
+    color: initial;
+}
+
+.cln-btn {
+    border: none;
+    background-color: initial;
+}
+
+// OPACITY
+
+.opacity-hover-9 {
+    &:hover {
+        opacity: 0.9;
+    }
+}
+.opacity-hover-8 {
+    &:hover {
+        opacity: 0.8;
+    }
+}
+.opacity-hover-7 {
+    &:hover {
+        opacity: 0.7;
+    }
+}
+.opacity-hover-6 {
+    &:hover {
+        opacity: 0.6;
+    }
+}
+.opacity-hover-5 {
+    &:hover {
+        opacity: 0.5;
+    }
+}

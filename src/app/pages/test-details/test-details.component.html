@@ -1,0 +1,16 @@
+<section *ngIf="test" class="width-container" [ngClass]="{ disable: !test.timeLeft }">
+  <h1>שם המבחן: {{ test.title }}</h1>
+  <ng-container *ngIf="!isStartQuiz; else startQuiz">
+    <button (click)="isStartQuiz = true">Start Quiz</button>
+  </ng-container>
+  <ng-template #startQuiz>
+    <timer (updateTime)="updateTime($event)" [timeLeft]="test.timeLeft"></timer>
+    <h3>סה"כ תשובות שנענו: {{ test.totalAnswered }}</h3>
+    <h3>סה"כ תשובות נכונות: {{ test.totalCorrectAnswered }}</h3>
+    <question-list
+      (updateScore)="updateScore()"
+      [questions]="test.questions"
+      [timeLeft]="test.timeLeft"
+    ></question-list>
+  </ng-template>
+</section>

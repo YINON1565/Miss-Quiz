@@ -1,0 +1,46 @@
+@import "../../../styles.scss";
+
+nav {
+   
+    .logo {
+        padding: 10px;
+        font-size: 32px;
+        img {
+            transition: transform 0.3s;
+        }
+        &:hover {
+            img {
+                transform-origin: 0;
+                transform: rotate(-15deg);
+            }
+        }
+        span {
+            text-transform: uppercase;
+            font-size: 16px;
+            color: red;
+        }
+    }
+    img {
+        width: 35px;
+    }
+    .nav-link-container {
+        a {
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0px 20px;
+            position: relative;
+            &:hover {
+                // background-color: red;
+                color: red;
+                @include ripple(rgba(255, 0, 0, 0.062), 0);
+            }
+            &.active {
+                color: red;
+                @include line-ripple(red, 0);
+                // background-color: blue;
+            }
+        }
+    }
+}

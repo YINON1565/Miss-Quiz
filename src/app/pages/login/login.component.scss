@@ -1,0 +1,37 @@
+@import '../../../styles/global.scss';
+
+form {
+    * {
+        direction: rtl;
+    }
+
+    .mat-form-field {
+        // :host-context() {
+            text-align: right;
+            margin-block-end: 12px;
+        // }
+    }
+    // width: 100vw;
+    padding: 15px;
+    margin: 20px 0;
+    @include for-mini-mobile-layout {
+        padding:25px;
+        width: $break-mini-mobile;
+        box-shadow: 0 0 5px #0000001c;
+        position: fixed;
+        top: 30%;
+        left: 50%;
+        transform: translate(-50%, -30%);
+    }
+    border-radius: 3px;
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 30px white inset !important;
+    // -webkit-text-fill-color: black !important;
+    transition: -webkit-box-shadow 0.3s;
+    // &::placeholder {
+    //     color: black;
+    //     opacity: 0.6;
+    // }
+}

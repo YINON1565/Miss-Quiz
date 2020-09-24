@@ -1,0 +1,121 @@
+/* Media queries Breakpoint mixins */
+
+@mixin for-mini-mobile-layout {
+  @media (min-width: $break-mini-mobile) {
+    @content;
+  }
+}
+@mixin for-medium-mobile-layout {
+  @media (min-width: $break-medium-mobile) {
+    @content;
+  }
+}
+@mixin for-mobile-layout {
+  @media (min-width: $break-mobile) {
+    @content;
+  }
+}
+
+@mixin for-narrow-layout {
+  @media (min-width: $break-narrow) {
+    @content;
+  }
+}
+
+@mixin for-normal-layout {
+  @media (min-width: $break-normal) {
+    @content;
+  }
+}
+
+@mixin for-wide-layout {
+  @media (min-width: $break-wide) {
+    @content;
+  }
+}
+
+// RTL || LTR
+
+// $layout-direction: rtl !default;
+
+// @mixin ltr {
+//     @if $layout-direction == ltr {
+//         @content;
+//     }
+// }
+// @mixin rtl {
+//     @if $layout-direction == rtl {
+//         @content;
+//     }
+// }
+
+/* Media  Mixins */
+
+//aspect ratio mixin
+@mixin aspect-ratio($width, $height) {
+  position: relative;
+  overflow: hidden;
+  &:before {
+    content: "";
+    display: block;
+    width: 100%;
+    padding-top: ($height / $width) * 100%;
+  }
+  > * {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  > img {
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+// Mixin for removing hover efects on iphone screen
+@mixin hover-supported {
+  @media not all and (pointer: coarse) {
+    &:hover {
+      @content;
+    }
+  }
+}
+
+@mixin ripple($color, $border-radius) {
+    z-index: 1;
+    &::after {
+      display: flex;
+      align-items: center;
+      position: absolute;
+      overflow: hidden;
+      content: "";
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: -1;
+      animation: grow-center-to-sides 0.3s;
+      border-radius: $border-radius;
+      background-color: $color;
+    }
+}
+
+@mixin line-ripple($color, $border-radius) {
+    z-index: 1;
+    &::before {
+      display: flex;
+      align-items: center;
+      position: absolute;
+      content: "";
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: -1;
+      animation: grow-center-to-sides .3s linear;
+      background-color: $color;
+      border-radius: $border-radius;
+      height: 5px;
+    }
+}

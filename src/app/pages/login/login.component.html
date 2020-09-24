@@ -1,0 +1,64 @@
+<form
+  [formGroup]="isSignup ? registerForm : loginForm"
+  #f
+  (submit)="onSubmit(f)"
+  class="width-container flex col j-center"
+>
+  <!-- <p *ngIf="nameCtrl.invalid">Name is invalid.</p> -->
+  <mat-form-field appearance="legacy" *ngIf="isSignup">
+    <mat-label>הזן שם משתמש</mat-label>
+    <input matInput type="text" formControlName="name" required />
+    <mat-error *ngIf="formGroup.controls['name'].invalid">
+      {{getError('name')}}
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="legacy">
+    <mat-label>הזן כתובת מייל</mat-label>
+    <input
+      matInput
+      type="email"
+      placeholder="pat@example.com"
+      formControlName="email"
+      required
+    />
+    <mat-error *ngIf="formGroup.controls['email'].invalid">
+      {{getError('email')}}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="legacy">
+    <mat-label>הזן סיסמא</mat-label>
+    <input
+      matInput
+      formControlName="password"
+      [type]="hide ? 'password' : 'text'"
+      required
+    />
+    <button
+      type="button"
+      mat-icon-button
+      matSuffix
+      (click)="hide = !hide"
+      [attr.aria-label]="'Hide password'"
+      [attr.aria-pressed]="hide"
+    >
+      <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+    </button>
+    <mat-error *ngIf="formGroup.controls['password'].invalid">
+      {{getError('password')}}
+    </mat-error>
+  </mat-form-field>
+  <section class="flex bet">
+    <button
+      [disabled]="isSignup ? !registerForm.valid : !loginForm.valid"
+      type="submit"
+      mat-stroked-button
+      color="primary"
+    >
+      {{ isSignup ? "הרשם" : "התחבר" }}
+    </button>
+    <button type="button" mat-button color="primary" (click)="isSignup = !isSignup">
+      {{ toggleIsSignUpBtnText }}
+    </button>
+  </section>
+</form>
