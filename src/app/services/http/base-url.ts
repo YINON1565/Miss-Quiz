@@ -1,3 +1,3 @@
-import { isDevMode } from '@angular/core';
+import { environment } from '../../../environments/environment';
 
-export const BASE_URL = isDevMode ? '//localhost:3030/api/' : '/api/' ;
+export const BASE_URL = environment.production ? '/api/' : '//localhost:3030/api/' ;
