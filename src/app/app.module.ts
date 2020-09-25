@@ -45,6 +45,8 @@ import { UserPageComponent } from './pages/user-page/user-page.component';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { UserPreviewComponent } from './components/user-preview/user-preview.component';
 import { UserDetailsComponent } from './pages/user-details/user-details.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -90,6 +92,7 @@ import { UserDetailsComponent } from './pages/user-details/user-details.componen
     MatFormFieldModule,
     MatCheckboxModule,
     MatIconModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   //SERVICES
   providers: [TestService, UtilService],
