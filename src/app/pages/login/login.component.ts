@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { catchError, tap } from 'rxjs/operators';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth/auth.service';
-import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'login',
@@ -13,7 +11,6 @@ import { UserService } from 'src/app/services/user/user.service';
 })
 export class LoginComponent implements OnInit {
   constructor(
-    private _userService: UserService,
     private _authService: AuthService,
     private _router: Router
   ) {}
@@ -107,26 +104,11 @@ export class LoginComponent implements OnInit {
   }
 
   public onSubmit(NgForm: NgForm): void {
-    // this.userForm.valid
-    //   ? this._checkIsAccountExists(this.userForm.value.email)
-    //   : this._handleError();
     const isValid = this.isSignup? this.registerForm.valid : this.loginForm.valid 
     !isValid ? this._handleError(): this.isSignup? this._signup(): this._login();
   }
 
-  // private _checkIsAccountExists(email: string) {
-  //   this._userService.getByEmail(email).pipe(
-  //     tap((user) => {
-  //       user && user._id ? this._signup() : this._login();
-  //     })
-  //   );
-  // }
-
   private _signup(): void {
-    // this._userService.getByEmail(credantials.email).pipe(
-    //   tap(user=> {user && user._id? }),
-    //   catchError()
-    // )
     const { name, email, password } = this.registerForm.value;
     this._authService
       .signup({ ...this._user, name, email, password })
@@ -142,7 +124,7 @@ export class LoginComponent implements OnInit {
       .login(this.loginForm.value)
       .subscribe((userLogged) => {
         userLogged
-          ? this._handleSuccess('userRegistered', userLogged)
+          ? this._handleSuccess('userLogged', userLogged)
           : this._handleError();
       });
   }

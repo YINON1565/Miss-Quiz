@@ -1,8 +1,18 @@
+<!-- todo: chack is add isTimeLimit boolean -->
+<stoper
+  *ngIf="!isTimeLimit && isActive"
+  [timePassed]="userQuestion.timePassed"
+  (updateTime)="updateTime($event)"
+></stoper>
+<h5>timePassed: {{userQuestion.timePassed}}</h5>
 <h2>שם השאלה: {{ question.questionContent }}</h2>
-answered {{ question.answeredIdx }}
+<h1 *ngIf="question.timePassed || question.timePassed === 0">
+  userQuestion.timePassed: {{ userQuestion.timePassed }}
+</h1>
 <answer-list
-  [timeLeft]="timeLeft"
   (cheackedAnswer)="cheackedAnswer($event)"
   [answers]="question.answers"
-  [answeredIdx]="question.answeredIdx"
+  [answeredIds]="userQuestion.answeredIds"
+  [correctAnswerIds]="question.correctAnswerIds"
+  [isActive]="isActive"
 ></answer-list>

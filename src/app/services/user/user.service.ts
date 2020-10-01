@@ -9,7 +9,7 @@ import { AuthService } from '../auth/auth.service';
 
 import { User } from 'src/app/interfaces/user';
 
-import { BASE_URL } from '../http/base-url';
+import { BASE_URL } from '../api/base-url';
 import { UserFiletrBy } from 'src/app/interfaces/user-filetr-by';
 
 @Injectable({

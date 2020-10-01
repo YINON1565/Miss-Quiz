@@ -1,11 +1,6 @@
-.correct-answer {
-    // background-color: green;
-}
-
-.disable {
-    background-color: red;
-}
-
-.answered {
-    background-color: blue;
+.is-answered{
+    background-color: lightcoral;
+    &.is-correct {
+        background-color: greenyellow;
+    }
 }

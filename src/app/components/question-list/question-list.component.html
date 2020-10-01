@@ -1,3 +1,28 @@
-<question-preview [timeLeft]="timeLeft" (updateScore)="updateScore.emit()" [question]="questions[currQuestionIdx]"></question-preview>
-<button [disabled]="currQuestionIdx === questions.length - 1" (click)="changeCurrQuestionIdx(1)">הבא</button>
-<button [disabled]="currQuestionIdx === 0" (click)="changeCurrQuestionIdx(-1)">הקודם</button>
+<section>
+  <!-- <button (click)="toggleIsAllQuestions()">
+    {{ toggleIsAllQuestionsBtn }}
+  </button> -->
+
+  <h1>שאלה {{ currQuestionIdx + 1 }}:</h1>
+  <question-preview
+    [isTimeLimit]="isTimeLimit"
+    [isActive]="isActive"
+    (updateScore)="updateScore.emit()"
+    [question]="questions[currQuestionIdx]"
+    [userQuestion]="userQuestions[currQuestionIdx]"
+  ></question-preview>
+  <section>
+    <button
+      [disabled]="currQuestionIdx === userQuestions.length - 1"
+      (click)="changeCurrQuestionIdx(1)"
+    >
+      הבא
+    </button>
+    <button
+      [disabled]="currQuestionIdx === 0"
+      (click)="changeCurrQuestionIdx(-1)"
+    >
+      הקודם
+    </button>
+  </section>
+</section>

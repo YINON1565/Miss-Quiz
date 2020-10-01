@@ -4,22 +4,15 @@ import { Answer } from 'src/app/interfaces/answer';
 @Component({
   selector: 'answer-preview',
   templateUrl: './answer-preview.component.html',
-  styleUrls: ['./answer-preview.component.scss']
+  styleUrls: ['./answer-preview.component.scss'],
 })
 export class AnswerPreviewComponent implements OnInit {
-@Input() answer: Answer;
-@Input() idx: number;
-@Input() idDisabled: boolean;
-@Input() answeredIdx: number;
-  constructor() { }
+  @Input() answer: Answer;
+  @Input() idx: number;
+  @Input() isActive: boolean;
+  @Input() answeredIds: string[];
+  @Input() correctAnswerIds: string[];
+  constructor() {}
 
-  
-  public get isDisable() : boolean {
-    return (this.answeredIdx || this.answeredIdx === 0) && this.answeredIdx !== this.idx
-  }
-  
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

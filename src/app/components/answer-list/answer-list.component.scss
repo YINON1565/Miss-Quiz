@@ -1,0 +1,6 @@
+.answered {
+    background-color: red;
+    &.is-correct {
+        background-color: blue;
+    }
+}

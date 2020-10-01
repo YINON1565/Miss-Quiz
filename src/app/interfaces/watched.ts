@@ -1,7 +1,7 @@
 export interface Watched {
     _id: string,
     userId?: string,
-    isUsed: boolean,
+    isActive: boolean,
     totalAnswered: number,
     totalCorrectAnswered: number,
 }

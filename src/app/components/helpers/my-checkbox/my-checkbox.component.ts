@@ -6,8 +6,8 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./my-checkbox.component.scss']
 })
 export class MyCheckboxComponent implements OnInit {
-@Input() value: boolean
-@Input() idDisabled: boolean = false
+@Input() isChecked: boolean
+@Input() isDisabled: boolean
   constructor() { }
 
   ngOnInit(): void {

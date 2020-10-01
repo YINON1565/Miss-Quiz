@@ -1,0 +1,25 @@
+<main class="width-container" *ngIf="test && user">
+  <h1>שלום {{ user.name }}</h1>
+  <a routerLink="/user/{{ user._id }}">חזור לכל המבחנים</a>
+  <a *ngIf="user._id === loggedinUser._id" routerLink="/test/{{ test._id }}"
+    >עבור למבחן</a
+  >
+  <h2>Your score: {{ score }}</h2>
+  <h3>totalCorrectAnswered: {{ userTest.totalCorrectAnswered }}</h3>
+  <h2 *ngIf="userTest.totalAnswered">
+    Score from the answers you gave:
+    {{ scoreFromAnswered }}
+  </h2>
+  <h3>totalAnswered: {{ userTest.totalAnswered }} / {{ userTest.questions.length }}</h3>
+  <h3>Time Left: {{ userTest.timeLeft }}</h3>
+
+  <section>
+    <h2>ניתוח המבחן שלך</h2>
+    <quiz-chart [chart]="correctStatisticChart"></quiz-chart>
+    <quiz-chart [chart]="timetTestStatisticChart"></quiz-chart>
+    <question-list
+      [questions]="test.questions"
+      [userQuestions]="userTest.questions"
+    ></question-list>
+  </section>
+</main>

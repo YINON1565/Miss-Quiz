@@ -1,1 +1,19 @@
-<p>test-edit works!</p>
+<main *ngIf="test" class="width-container">
+    <!-- <button (click)="goBack()">Go Back</button> -->
+    <h1>New Quiz</h1>
+    <section>
+        <h2>Title</h2>
+        <input type="text" [(ngModel)]="test.title">
+    </section>
+    <section>
+        <h2>Time Limit</h2>
+        <input type="checkbox" [(ngModel)]="isTimeLimit">
+        <input [disabled]="!test.isTimeLimit" type="number" [min]="0" [(ngModel)]="test.timeLimit">
+    </section>
+    <button (click)="addQuestion()">Add Question</button>
+    <section>
+        <question-edit (removeQuestion)="removeQuestion($event)" *ngFor="let question of test.questions" [question]="question"></question-edit>
+    </section>
+    <button (click)="saveTest()">Save</button>
+    <button (click)="test._id? removeTest() : clearTest()">{{test._id? 'Delete': 'Clear'}}</button>
+</main>

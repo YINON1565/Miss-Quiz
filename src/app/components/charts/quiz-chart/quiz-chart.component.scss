@@ -1,0 +1,17 @@
+.chart-container {
+    width: 100%;
+    position: relative;
+    height: 400px;
+
+    .chart {
+
+        // width: 100%;
+    }
+    > img {
+        width: 50px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}

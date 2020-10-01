@@ -1,0 +1,12 @@
+<section class="answer-edit" [class.is-correct]="correctAnswerIds.includes(answer._id)">
+    <button (click)="removeAnswer.emit(answerIdx)">X</button>
+    <section>
+        <h2>answerContent: {{answer.answerContent}}</h2>
+        <input type="text" [(ngModel)]="answer.answerContent">
+    </section>
+    <section>
+        <h2>Is Correct?</h2>
+        <input (click)="onCheckedCorrect.emit(answer._id)" type="button" value="correct answer">
+        <!-- <input  (change)="onCheckedCorrect.emit(answer._id)" type="checkbox" [(ngModel)]="answer.isCorrect"> -->
+    </section>
+</section>

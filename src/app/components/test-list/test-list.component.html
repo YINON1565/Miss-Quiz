@@ -1,6 +1,7 @@
+<!-- *ngFor="let test of testsForShow; let idx = index" -->
 <test-preview
   *ngFor="let test of tests; let idx = index"
   [test]="test"
   [idx]="idx"
-  routerLink="/test/{{test._id}}"
-  ></test-preview>
+  [routerLink]="test.testId? '/user/' + userId + '/score/' + test.testId : '/test/' + test._id "
+></test-preview>

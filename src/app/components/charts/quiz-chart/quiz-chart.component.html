@@ -1,0 +1,22 @@
+<select *ngIf="chart.chartTypes" [(ngModel)]="typeDynamic">
+  <option *ngFor="let type of chart.chartTypes" [value]="type" >{{type}}</option>
+</select>
+
+<section class="chart-container flex a-center j-center">
+  
+  <google-chart
+    *ngIf="chart"
+    class="chart"
+    [type]="typeDynamic"
+    [columnNames]="chart.columnNames"
+    [data]="chart.data"
+    [options]="chart.options"
+    [dynamicResize]="true"
+
+    (ready)="isReady = true"
+    style="width: 100%; height: 100%"
+    >
+  </google-chart>
+
+  <img *ngIf="!isReady" src="assets/svg/loading.svg" />
+</section>

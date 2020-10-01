@@ -1,6 +1,7 @@
-import { Activity } from './activity';
+import { UserActivity } from './user-activity';
 import { Preference } from './preference';
 import { Test } from './test';
+import { UserTest } from './user-test';
 
 export interface User {
     _id?: string,
@@ -12,8 +13,10 @@ export interface User {
     phone?: string,
     photoUrl?: string,
     isAdmin?: boolean,
-    tests?: Test[]
+    tests?: UserTest[]
+    // tests?: Test[]
     // activity: {test: Test[]}
-    // activities: Activity[],
+    activities?: UserActivity[],
     // preferences: Preference[]
+    // Todo: add favorites object {color: '', backgroundcolor: ''}
 }

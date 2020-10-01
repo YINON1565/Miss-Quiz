@@ -11,20 +11,55 @@ import { UserService } from 'src/app/services/user/user.service';
   encapsulation: ViewEncapsulation.None,
 })
 export class UserDetailsComponent implements OnInit {
-
   public user: User;
-
-  constructor(private _userService : UserService, private _route: ActivatedRoute) { }
+  public timetTestsStatisticChart: any;
+  constructor(
+    private _userService: UserService,
+    private _route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    this._loadUser()
+    this._loadUser();
   }
 
   private _loadUser(): void {
-    const userId = this._route.snapshot.paramMap.get('id')
-    this._userService.getById(userId).pipe(first()).subscribe(user=> {
-      this.user = user
-    })
+    const userId = this._route.snapshot.paramMap.get('id');
+    this._userService
+      .getById(userId)
+      .pipe(first())
+      .subscribe((user) => {
+        this.user = user;
+        this._setChart()
+      });
   }
 
+
+  private _setChart() {
+    this.timetTestsStatisticChart = {
+      chartTypes: [
+        'AreaChart',
+        'LineChart',
+        'ColumnChart',
+        'ScatterChart',
+        'SteppedAreaChart',
+      ],
+      type: 'AreaChart',
+      data: [...this.user.tests.map((t, i) => [new Date(t.activeAt).toLocaleDateString(), t.totalCorrectAnswered * 10])],
+      columnNames: ['result', 'date'],
+      options: {
+        title: 'גרף תוצאות מבחנים שעשית',
+        // colors: ['red'],
+        animation: { duration: 1000, easing: 'liner', startup: true },
+        legend: 'none',
+        vAxis: {
+          title: 'תוצאה',
+          titleTextStyle: { fontSize: 18 },
+        },
+        hAxis: {
+          title: 'תאריך',
+          titleTextStyle: { fontSize: 18 },
+        },
+      },
+    };
+  }
 }

@@ -6,6 +6,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // <-- NgMode
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 
+//google-chart
+import { GoogleChartsModule } from 'angular-google-charts';
+
+import {} from 'socket.io-client'
+
 // MATERIALS
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -47,6 +52,15 @@ import { UserPreviewComponent } from './components/user-preview/user-preview.com
 import { UserDetailsComponent } from './pages/user-details/user-details.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { TestScoreDetailsComponent } from './pages/test-score-details/test-score-details.component';
+import { QuizChartComponent } from './components/charts/quiz-chart/quiz-chart.component';
+import { StoperComponent } from './components/stoper/stoper.component';
+import { AuthService } from './services/auth/auth.service';
+import { StorageService } from './services/storage/storage.service';
+import { UserService } from './services/user/user.service';
+import { SocketService } from './services/socket/socket.service';
+import { QuestionEditComponent } from './components/question-edit/question-edit.component';
+import { AnswerEditComponent } from './components/answer-edit/answer-edit.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +86,11 @@ import { environment } from '../environments/environment';
     UserListComponent,
     UserPreviewComponent,
     UserDetailsComponent,
+    TestScoreDetailsComponent,
+    QuizChartComponent,
+    StoperComponent,
+    QuestionEditComponent,
+    AnswerEditComponent,
   ],
   imports: [
     // GENERAL
@@ -81,6 +100,9 @@ import { environment } from '../environments/environment';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+
+    //google-chart
+    GoogleChartsModule,
 
     //MATETIALS
     MatTooltipModule,
@@ -95,7 +117,7 @@ import { environment } from '../environments/environment';
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   //SERVICES
-  providers: [TestService, UtilService],
+  providers: [TestService, UtilService, AuthService, StorageService, UserService, SocketService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

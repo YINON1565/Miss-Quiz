@@ -2,12 +2,13 @@
   class="test-preview flex col a-center j-center"
   matTooltip="Info about the action"
 >
-  <h3>
+  <h3 class="flex a-center j-center">
     {{ test.title }}
   </h3>
+  <!-- <section class="flex col a-center j-center"> -->
   <section class="flex col a-center j-center" *ngIf="test.totalAnswered">
     <h5>totalAnswered: {{ test.totalAnswered }}</h5>
     <h5>totalCorrectAnswered: {{ test.totalCorrectAnswered }}</h5>
-    <h5>timeLeft: {{ timeForShow }}</h5>
+    <h5 *ngIf="timeForShow">timeLeft: {{ timeForShow }}</h5>
   </section>
 </section>

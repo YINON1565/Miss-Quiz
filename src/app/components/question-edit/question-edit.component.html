@@ -1,0 +1,23 @@
+<section class="question-edit">
+  <button (click)="removeQuestion.emit(question._id)">X</button>
+  <section>
+    <h2>questionContent: {{ question.questionContent }}</h2>
+    <input type="text" [(ngModel)]="question.questionContent" />
+  </section>
+  <section class="flex a-center">
+    <h2>isMultipleChoice: {{question.isMultipleChoice}}</h2>
+    <input type="checkbox" (change)="onToggleIsMultipleChoice()" [(ngModel)]="question.isMultipleChoice">
+  </section>
+  <section>
+    <button (click)="addAnswer()">Add Answer</button>
+    <answer-edit
+      (removeAnswer)="removeAnswer($event)"
+      (onCheckedCorrect)="checkedCorrect($event)"
+      *ngFor="let answer of question.answers; let idx = index"
+      [answer]="answer"
+      [answerIdx]="idx"
+      [isMultipleChoice]="question.isMultipleChoice"
+      [correctAnswerIds]="question.correctAnswerIds"
+    ></answer-edit>
+  </section>
+</section>

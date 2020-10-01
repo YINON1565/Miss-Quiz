@@ -1,3 +1,7 @@
 <!-- <test-page class="width-container"></test-page> -->
 <main-header></main-header>
-<router-outlet></router-outlet>
+<section class="width-container flex bet a-center">
+    <button  (click)="goBack()">Go Back</button>
+    <h3>connecteds: {{connecteds}}</h3>
+</section>
+<router-outlet (activate)="onActivate($event)"></router-outlet>

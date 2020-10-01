@@ -11,7 +11,8 @@ import { StorageService } from '../storage/storage.service';
 import { User } from 'src/app/interfaces/user';
 import { UserLoginCred } from 'src/app/interfaces/user-login-cred';
 
-import { BASE_URL } from '../http/base-url';
+import { BASE_URL } from '../api/base-url';
+import { SocketService } from '../socket/socket.service';
 
 @Injectable({
   providedIn: 'root',
@@ -27,12 +28,13 @@ export class AuthService {
   private _url = `${BASE_URL}auth`;
 
   constructor(
-    private _storageService: StorageService,
+    private _storage: StorageService,
+    private _socket: SocketService,
     private _http: HttpClient,
     private _router: Router
   ) {
     this.userSubject = new BehaviorSubject<User>(
-      this._storageService.loadSession(this.KEY_LOGGEDIN)
+      this._storage.loadSession(this.KEY_LOGGEDIN)
     );
     this.user = this.userSubject.asObservable();
   }
@@ -46,7 +48,8 @@ export class AuthService {
 
   private _handleLogin(user: User) {
     try {
-    this._storageService.storeSession(this.KEY_LOGGEDIN, user);
+      this._storage.storeSession(this.KEY_LOGGEDIN, user);
+      // this._socket.emit('updateConnecteds', 1);
     } catch (err) {
       console.log('ERROR IN _handleLogin', err);
     }
@@ -105,6 +108,7 @@ export class AuthService {
         // const {message} = res
         sessionStorage.clear();
         this.userSubject.next(null);
+        // this._socket.emit('updateConnecteds', -1);
         this._router.navigate(['/login']);
       });
   }
@@ -119,5 +123,4 @@ export class AuthService {
       tests: [],
     };
   }
-
 }

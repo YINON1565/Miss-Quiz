@@ -1,0 +1,9 @@
+.answer-checked {
+    background-color: red;
+    &.correct-answered {
+        background-color: blue;
+    }
+}
+.correct-answered {
+    background-color: green;
+}

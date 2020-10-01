@@ -4,7 +4,6 @@
   (submit)="onSubmit(f)"
   class="width-container flex col j-center"
 >
-  <!-- <p *ngIf="nameCtrl.invalid">Name is invalid.</p> -->
   <mat-form-field appearance="legacy" *ngIf="isSignup">
     <mat-label>הזן שם משתמש</mat-label>
     <input matInput type="text" formControlName="name" required />

@@ -1,25 +1,27 @@
-import {Question} from './question'
+import { Question } from './question';
 import { Review } from './review';
-import {User} from './user'
-import { Watched } from './watched';
-// import {Category} from './category'
+import { User } from './user';
+import { TestActivity } from './test-activity';
 
 export interface Test {
-    _id?:string,
-    title: string,
-    createor?: User,
-    createdAt?: number,
-    lastUpdatedAt?: number,
-    timeLeft?: number 
-    categories: string[],
-    questions: Question[],
-    watcheds: Watched[],
-    totalAnswered: number,
-    totalCorrectAnswered: number,
-    // userUseds: number, 
-    // totalWatched: number,
-    // totalUsed: number, 
-    // totalScore: number,
-    reviews: Review[],
-    isPublish: boolean
+  _id?: string;
+  timeLimt?: number;
+  title: string;
+
+  subtitle?: string;
+  description?: string;
+  videoUrl?: string;
+  imgUrl?: string;
+  audioUrl?: string;
+  link?: string;
+
+  activities?: TestActivity[];
+  tags?: string[];
+  lastUpdatedAt?: number;
+  reviews?: Review[];
+
+  isPublish: boolean;
+  createor?: User;
+  createdAt?: number;
+  questions: Question[];
 }

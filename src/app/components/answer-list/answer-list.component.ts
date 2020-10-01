@@ -8,15 +8,14 @@ import { Answer } from 'src/app/interfaces/answer';
 })
 export class AnswerListComponent implements OnInit {
   @Input() answers: Answer[];
-  @Input() answeredIdx: number;
-  @Input() timeLeft: number;
-  @Output() cheackedAnswer = new EventEmitter<number>();
+  @Input() answeredIds: string[];
+  @Input() correctAnswerIds: string[];
+  @Input() isActive: boolean;
+  @Output() cheackedAnswer = new EventEmitter<string>();
 
   constructor() {}
 
   ngOnInit(): void {
   }
-  public onCheackedAnswer(idx: number): void {
-    this.timeLeft ? this.cheackedAnswer.emit(idx) : '';
-  }
+
 }
