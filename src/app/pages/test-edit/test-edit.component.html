@@ -8,7 +8,7 @@
     <section>
         <h2>Time Limit</h2>
         <input type="checkbox" [(ngModel)]="isTimeLimit">
-        <input [disabled]="!test.isTimeLimit" type="number" [min]="0" [(ngModel)]="test.timeLimit">
+        <input [disabled]="!isTimeLimit" type="number" [min]="0" [(ngModel)]="test.timeLimit">
     </section>
     <button (click)="addQuestion()">Add Question</button>
     <section>

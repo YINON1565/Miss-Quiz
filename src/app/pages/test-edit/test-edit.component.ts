@@ -53,7 +53,7 @@ export class TestEditComponent implements OnInit {
   }
 
   public saveTest() {
-    this._testService.saveTest(this.test);
+    this._testService.saveTest(this.test).subscribe();
     this._router.navigate(['/test']);
   }
 

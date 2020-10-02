@@ -13,8 +13,8 @@
       (updateTime)="updateTime($event)"
       [timeLeft]="userTest.timeLeft"
     ></timer>
-    <h3>סה"כ תשובות שנענו: {{ test.totalAnswered }}</h3>
-    <h3>סה"כ תשובות נכונות: {{ test.totalCorrectAnswered }}</h3>
+    <h3>סה"כ תשובות שנענו: {{ userTest.totalAnswered }}</h3>
+    <h3>סה"כ תשובות נכונות: {{ userTest.totalCorrectAnswered }}</h3>
     <question-list
       (updateScore)="updateScore()"
       [questions]="test.questions"

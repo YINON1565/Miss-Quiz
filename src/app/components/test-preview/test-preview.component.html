@@ -5,6 +5,12 @@
   <h3 class="flex a-center j-center">
     {{ test.title }}
   </h3>
+
+  <section *ngIf="test.activities && test.activities.length">
+    <h5>מספר הניגשים למבחן: {{test.activities.length}}</h5>
+    <h5>ממוצע הציונים עד כה: {{scoreAvarage}}</h5>
+    <!-- {{test.activities | json}} -->
+  </section>
   <!-- <section class="flex col a-center j-center"> -->
   <section class="flex col a-center j-center" *ngIf="test.totalAnswered">
     <h5>totalAnswered: {{ test.totalAnswered }}</h5>

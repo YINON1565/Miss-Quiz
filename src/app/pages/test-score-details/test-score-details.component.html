@@ -1,5 +1,5 @@
 <main class="width-container" *ngIf="test && user">
-  <h1>שלום {{ user.name }}</h1>
+  <h1>{{user._id === loggedinUser._id? 'שלום,': 'הדף של'}} {{ user.name }}</h1>
   <a routerLink="/user/{{ user._id }}">חזור לכל המבחנים</a>
   <a *ngIf="user._id === loggedinUser._id" routerLink="/test/{{ test._id }}"
     >עבור למבחן</a
@@ -10,13 +10,26 @@
     Score from the answers you gave:
     {{ scoreFromAnswered }}
   </h2>
-  <h3>totalAnswered: {{ userTest.totalAnswered }} / {{ userTest.questions.length }}</h3>
+  <h3>
+    totalAnswered: {{ userTest.totalAnswered }} /
+    {{ userTest.questions.length }}
+  </h3>
   <h3>Time Left: {{ userTest.timeLeft }}</h3>
+
+  <section *ngIf="test.activities.length; else noActivities">
+    <h2>מספר הניגשים למבחן זה: {{ test.activities.length }}</h2>
+    <h2>ממוצע ציונים למבחן זה: {{ scoreAvarage }}</h2>
+    <quiz-chart [chart]="avarageScoreChart"></quiz-chart>
+  </section>
+
+  <ng-template #noActivities>
+    <h2>אין נבחנים עדיין</h2>
+  </ng-template>
 
   <section>
     <h2>ניתוח המבחן שלך</h2>
-    <quiz-chart [chart]="correctStatisticChart"></quiz-chart>
-    <quiz-chart [chart]="timetTestStatisticChart"></quiz-chart>
+    <quiz-chart [chart]="correctChart"></quiz-chart>
+    <quiz-chart [chart]="timetTestChart"></quiz-chart>
     <question-list
       [questions]="test.questions"
       [userQuestions]="userTest.questions"

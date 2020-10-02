@@ -4,7 +4,7 @@
 //   {
 //     _id: 't10',
 //     title: 'title10',
-//     // createor?: User,
+//     // creator?: User,
 //     // createdAt?: number,
 //     // lastUpdatedAt?: number,
 //     timeLeft: 60 * 10, // 10 minutes
@@ -140,7 +140,7 @@
 //   {
 //     _id: 't20',
 //     title: 'title20',
-//     // createor?: User,
+//     // creator?: User,
 //     // createdAt?: number,
 //     // lastUpdatedAt?: number,
 //     timeLeft: 60 * 10, // 10 minutes
@@ -276,7 +276,7 @@
 //   {
 //     _id: 't30',
 //     title: 'title30',
-//     // createor?: User,
+//     // creator?: User,
 //     // createdAt?: number,
 //     // lastUpdatedAt?: number,
 //     timeLeft: 60 * 10, // 10 minutes
@@ -412,7 +412,7 @@
 //   {
 //     _id: 't40',
 //     title: 'title40',
-//     // createor?: User,
+//     // creator?: User,
 //     // createdAt?: number,
 //     // lastUpdatedAt?: number,
 //     timeLeft: 60 * 10, // 10 minutes
@@ -548,7 +548,7 @@
 //   {
 //     _id: 't50',
 //     title: 'title50',
-//     // createor?: User,
+//     // creator?: User,
 //     // createdAt?: number,
 //     // lastUpdatedAt?: number,
 //     timeLeft: 60 * 10, // 10 minutes
@@ -684,7 +684,7 @@
 //   {
 //     _id: 't60',
 //     title: 'title60',
-//     // createor?: User,
+//     // creator?: User,
 //     // createdAt?: number,
 //     // lastUpdatedAt?: number,
 //     timeLeft: 60 * 10, // 10 minutes
@@ -820,7 +820,7 @@
 //   {
 //     _id: 't70',
 //     title: 'title70',
-//     // createor?: User,
+//     // creator?: User,
 //     // createdAt?: number,
 //     // lastUpdatedAt?: number,
 //     timeLeft: 60 * 10, // 10 minutes
@@ -956,7 +956,7 @@
 //   {
 //     _id: 't80',
 //     title: 'title80',
-//     // createor?: User,
+//     // creator?: User,
 //     // createdAt?: number,
 //     // lastUpdatedAt?: number,
 //     timeLeft: 60 * 10, // 10 minutes
@@ -1092,7 +1092,7 @@
 //   {
 //     _id: 't90',
 //     title: 'title90',
-//     // createor?: User,
+//     // creator?: User,
 //     // createdAt?: number,
 //     // lastUpdatedAt?: number,
 //     timeLeft: 60 * 10, // 10 minutes
@@ -1228,7 +1228,7 @@
 //   {
 //     _id: 't00',
 //     title: 'title00',
-//     // createor?: User,
+//     // creator?: User,
 //     // createdAt?: number,
 //     // lastUpdatedAt?: number,
 //     timeLeft: 60 * 10, // 10 minutes

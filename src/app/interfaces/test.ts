@@ -2,10 +2,11 @@ import { Question } from './question';
 import { Review } from './review';
 import { User } from './user';
 import { TestActivity } from './test-activity';
+import { TestChange } from './test-change';
 
 export interface Test {
   _id?: string;
-  timeLimt?: number;
+  timeLimit?: number;
   title: string;
 
   subtitle?: string;
@@ -16,12 +17,14 @@ export interface Test {
   link?: string;
 
   activities?: TestActivity[];
+  changes?: number;
+  // changes?: TestChange[];
   tags?: string[];
   lastUpdatedAt?: number;
   reviews?: Review[];
-
+  
   isPublish: boolean;
-  createor?: User;
+  creator?: User;
   createdAt?: number;
   questions: Question[];
 }

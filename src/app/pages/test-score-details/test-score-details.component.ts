@@ -56,16 +56,27 @@ export class TestScoreDetailsComponent implements OnInit {
     return this._authService.userValue;
   }
 
+  public get scoreAvarage(): number {
+    return Math.floor(
+      this.test.activities.reduce(
+        (a, b) =>
+          a + (b.totalCorrectAnswered / this.test.questions.length) * 100,
+        0
+      ) / this.test.activities.length
+    );
+  }
+
   public score: number;
   public scoreFromAnswered: number;
 
-  public correctStatisticChart: any;
-  public timetTestStatisticChart: any;
+  public correctChart: any;
+  public timetTestChart: any;
+  public avarageScoreChart: any;
 
   private _setCharts() {
     const { totalAnswered, totalCorrectAnswered, questions } = this.userTest;
 
-    this.correctStatisticChart = {
+    this.correctChart = {
       chartTypes: [
         'BarChart',
         'PieChart',
@@ -96,7 +107,7 @@ export class TestScoreDetailsComponent implements OnInit {
         },
       },
     };
-    this.timetTestStatisticChart = {
+    this.timetTestChart = {
       chartTypes: [
         'AreaChart',
         'LineChart',
@@ -118,6 +129,32 @@ export class TestScoreDetailsComponent implements OnInit {
         },
         hAxis: {
           title: 'מספר שאלה',
+          titleTextStyle: { fontSize: 18 },
+        },
+      },
+    };
+    this.avarageScoreChart = {
+      chartTypes: [
+        'AreaChart',
+        'LineChart',
+        'ColumnChart',
+        'ScatterChart',
+        'SteppedAreaChart',
+      ],
+      type: 'ScatterChart',
+      data: [...this.test.activities.map((act, i) => [new Date(act.activeAt).toLocaleDateString(), (act.totalCorrectAnswered / questions.length) * 100])],
+      columnNames: ['תאריך', 'ניקוד'],
+      options: {
+        title: 'היסטוריית התפלגות ציונים',
+        // colors: ['red'],
+        animation: { duration: 1000, easing: 'liner', startup: true },
+        legend: 'none',
+        vAxis: {
+          title: 'תאריך',
+          titleTextStyle: { fontSize: 18 },
+        },
+        hAxis: {
+          title: 'ניקוד',
           titleTextStyle: { fontSize: 18 },
         },
       },

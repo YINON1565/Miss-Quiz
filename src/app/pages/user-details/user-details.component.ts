@@ -44,8 +44,8 @@ export class UserDetailsComponent implements OnInit {
         'SteppedAreaChart',
       ],
       type: 'AreaChart',
-      data: [...this.user.tests.map((t, i) => [new Date(t.activeAt).toLocaleDateString(), t.totalCorrectAnswered * 10])],
-      columnNames: ['result', 'date'],
+      data: [...this.user.tests.filter(t=> t.totalAnswered).map((t, i) => [new Date(t.activeAt).toLocaleDateString(), t.totalCorrectAnswered * 10])],
+      columnNames: ['DATE', 'SCORE'],
       options: {
         title: 'גרף תוצאות מבחנים שעשית',
         // colors: ['red'],

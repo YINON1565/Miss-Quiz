@@ -3,8 +3,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { Test } from 'src/app/interfaces/test';
+import { TestActivity } from 'src/app/interfaces/test-activity';
 import { User } from 'src/app/interfaces/user';
-import { UserQuestion } from 'src/app/interfaces/user-question';
 import { UserTest } from 'src/app/interfaces/user-test';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { TestService } from 'src/app/services/test/test.service';
@@ -62,6 +62,7 @@ export class TestDetailsComponent implements OnInit, OnDestroy {
           userTest = this._BuildUserTest();
           this.user.tests.push(userTest);
           this.updateUser();
+          
         }
         this.userTest = userTest;
       });
@@ -95,7 +96,7 @@ export class TestDetailsComponent implements OnInit, OnDestroy {
     this.userTest.timeLeft = currTimeLeft;
   }
 
-  private _updateTest(): void {
+  private _dataUpdate(): void {
     if (this.userTest.totalAnswered) {
       this.userTest.activeAt = Date.now();
     }
@@ -105,6 +106,8 @@ export class TestDetailsComponent implements OnInit, OnDestroy {
     );
     this.user.tests.splice(testIdx, 1, this.userTest);
     this.updateUser();
+
+    this._updateTest();
   }
 
   public sendTest() {
@@ -126,7 +129,7 @@ export class TestDetailsComponent implements OnInit, OnDestroy {
 
   public restartTest() {
     this.userTest = this._BuildUserTest(this.userTest.testId);
-    this._updateTest();
+    this._dataUpdate();
   }
 
   private _BuildUserTest(testId: string = null): UserTest {
@@ -138,19 +141,43 @@ export class TestDetailsComponent implements OnInit, OnDestroy {
       timePassed: 0,
     }));
     if (!testId) {
-      userTest.testId = this.test._id 
+      userTest.testId = this.test._id;
     }
     userTest.title = this.test.title;
-    userTest.timeLimt = this.test.timeLimt;
-    userTest.timeLeft = this.test.timeLimt;
+    userTest.timeLimit = this.test.timeLimit;
+    userTest.timeLeft = this.test.timeLimit;
     console.log(userTest, 'userTest');
-    
+
     return userTest;
+  }
+
+  private _updateTest() {
+    const { activities } = this.test;
+    const activity: TestActivity = this._buildTestActivity();
+    const activityIdx = activities.findIndex((activity) => {
+      activity.userId === this.user._id;
+    });
+    activityIdx === -1
+      ? activities.push(activity)
+      : activities.splice(activityIdx, 1, activity);
+    this._testService.saveTest(this.test).subscribe((updatedTest) => {
+      console.log(updatedTest, 'updatedTest in test details');
+    });
+  }
+
+  private _buildTestActivity(): TestActivity {
+    return {
+      testId: this.test._id,
+      userId: this.user._id,
+      activeAt: Date.now(),
+      totalAnswered: this.userTest.totalAnswered,
+      totalCorrectAnswered: this.userTest.totalCorrectAnswered,
+    };
   }
 
   ngOnDestroy(): void {
     if (this.isTestChange) {
-      this._updateTest();
+      this._dataUpdate();
     }
   }
 }
