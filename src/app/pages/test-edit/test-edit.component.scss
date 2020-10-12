@@ -1,0 +1,23 @@
+form {
+    .example-full-width {
+        width: 100%;
+    }
+
+    position: relative;
+    .controller {
+        position: absolute;
+        top: 0;
+        left: 0;
+        gap: 10px;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .btn-wrapper {
+        height: 100px;
+        button {
+            width: 160px;
+            height: 60px;
+            font-size: 21px;
+        }
+    }
+}

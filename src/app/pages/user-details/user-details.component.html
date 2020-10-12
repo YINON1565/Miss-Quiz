@@ -1,6 +1,20 @@
 <main *ngIf="user" class="width-container">
-    <h1>{{user.name}}</h1>
-    <h2>Quizs:</h2>
-    <quiz-chart [chart]="timetTestsStatisticChart"></quiz-chart>
-    <test-list class="test-list" [tests]="user.tests" [isTestsUser]="true"></test-list>
+  <h1>שלום, {{ user.name }}</h1>
+  <header class="flex bet">
+    <h2  [class.hidden]="isFocus">שאלונים שעשית או שצפית:</h2>
+    <test-filter
+      class="filter"
+      [class.focus]="isFocus"
+      (toggleFocus)="isFocus = !isFocus"
+      (emitFilter)="setFilter($event)"
+      [filterBy]="filterBy"
+      [options]="options"
+      [label]="'חפש שאלונים שעשית / שצפית...'"
+      [placeholder]="'לדוגמא: בראשית'"
+    ></test-filter>
+  </header>
+  <test-list class="test-list" [tests]="tests"></test-list>
+  <h2 class="m-b-start-3ch m-b-end-1ch">סטטיסטיקות</h2>
+  <quiz-chart [chart]="timeTestsChart"></quiz-chart>
+  <!-- [isTestsUser]="true" -->
 </main>

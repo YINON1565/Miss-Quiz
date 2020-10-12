@@ -1,28 +1,43 @@
-<section>
+<section class="question-list flex col bet">
   <!-- <button (click)="toggleIsAllQuestions()">
     {{ toggleIsAllQuestionsBtn }}
   </button> -->
+  <!-- <mat-toolbar> -->
+  <question-nav
+    [questions]="userQuestions"
+    [currQuestionIdx]="currQuestionIdx"
+    (emitChangeCurrQuestionIdx)="changeCurrQuestionIdx($event)"
+  ></question-nav>
+  
 
-  <h1>שאלה {{ currQuestionIdx + 1 }}:</h1>
-  <question-preview
-    [isTimeLimit]="isTimeLimit"
-    [isActive]="isActive"
-    (updateScore)="updateScore.emit()"
-    [question]="questions[currQuestionIdx]"
-    [userQuestion]="userQuestions[currQuestionIdx]"
-  ></question-preview>
-  <section>
-    <button
-      [disabled]="currQuestionIdx === userQuestions.length - 1"
-      (click)="changeCurrQuestionIdx(1)"
-    >
-      הבא
-    </button>
-    <button
-      [disabled]="currQuestionIdx === 0"
-      (click)="changeCurrQuestionIdx(-1)"
-    >
-      הקודם
-    </button>
+  <!-- </mat-toolbar> -->
+  <section class="flex col bet w100 h100">
+    <question-preview
+      [isTimeLimit]="isTimeLimit"
+      [isActive]="isActive"
+      (updateScore)="updateScore.emit()"
+      [question]="questions[currQuestionIdx]"
+      [currQuestionIdx]="currQuestionIdx"
+      [questionsLength]="questions.length"
+      [userQuestion]="userQuestions[currQuestionIdx]"
+    ></question-preview>
+    <section class="btn-wrapper flex a-center bet">
+      <button
+        mat-stroked-button
+        [disabled]="currQuestionIdx === 0"
+        (click)="changeCurrQuestionIdx(-1)"
+      >
+        <mat-icon>chevron_right</mat-icon>
+        הקודם
+      </button>
+      <button
+        mat-stroked-button
+        [disabled]="currQuestionIdx === userQuestions.length - 1"
+        (click)="changeCurrQuestionIdx(1)"
+      >
+        הבא
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+    </section>
   </section>
 </section>

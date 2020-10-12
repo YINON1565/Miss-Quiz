@@ -1,0 +1,39 @@
+<!-- <input
+  type="text"
+  [(ngModel)]="filterBy.term"
+  placeholder=" search..."
+  (input)="onEmitFilter.next()"
+  />
+  <ul *ngIf="options">
+    <li *ngFor="let option of options">{{ option }}</li>
+  </ul> -->
+
+<form class="light-outline-form">
+  <mat-form-field class="filter-full-width" appearance="outline">
+    <mat-label>{{label}}</mat-label>
+
+    <input
+      type="text"
+      [placeholder]="placeholder"
+      matInput
+      [(ngModel)]="filterBy.term"
+      [matAutocomplete]="auto"
+      name="term"
+      [formControl]="searchControl"
+      (focus)="toggleFocus.emit()"
+      (blur)="toggleFocus.emit()"
+    />
+    <!-- (input)="onEmitFilter.next()" -->
+    <!-- (click)="onEmitFilter.next()" -->
+    <mat-icon matSuffix>search</mat-icon>
+    <mat-autocomplete
+      autoActiveFirstOption
+      #auto="matAutocomplete"
+      (optionSelected)="onOptionSelected($event.option.value)"
+    >
+      <mat-option *ngFor="let option of options" [value]="option.link">
+        {{ option.name }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</form>

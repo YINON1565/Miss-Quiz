@@ -1,5 +1,14 @@
 .question-edit {
     padding: 10px;
     margin-top: 10px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    .mat-checkbox {
+        width: fit-content;
+    }
+    .asnwer-edit-container {
+        button {
+            margin: 15px 0;
+        }
+    }
 }

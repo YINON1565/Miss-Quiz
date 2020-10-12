@@ -4,6 +4,7 @@ nav {
     .logo {
         padding: 10px;
         font-size: 32px;
+        color: #ffffffe6;
         img {
             transition: transform 0.3s;
         }
@@ -16,13 +17,16 @@ nav {
         span {
             text-transform: uppercase;
             font-size: 16px;
-            color: red;
+            // color: red;
         }
     }
     img {
         width: 35px;
     }
     .nav-link-container {
+        a,button {
+            color: #ffffffe6;
+        }
         a {
             text-transform: uppercase;
             display: flex;
@@ -32,12 +36,12 @@ nav {
             position: relative;
             &:hover {
                 // background-color: red;
-                color: red;
-                @include ripple(rgba(255, 0, 0, 0.062), 0);
+                // color: rgb(255, 209, 209);
+                // @include ripple(rgba(255, 0, 0, 0.062), 0);
             }
             &.active {
-                color: red;
-                @include line-ripple(red, 0);
+                // color: rgb(255, 255, 255);
+                @include line-ripple(#ffffffe6, 0);
                 // background-color: blue;
             }
         }

@@ -21,6 +21,12 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
+import {MatTreeModule} from '@angular/material/tree';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatToolbarModule} from '@angular/material/toolbar';
 
 //APP
 import { AppComponent } from './app.component';
@@ -39,6 +45,7 @@ import { AnswerPreviewComponent } from './components/answer-preview/answer-previ
 // HELPERS
 import { MyCheckboxComponent } from './components/helpers/my-checkbox/my-checkbox.component';
 import { TimerComponent } from './components/timer/timer.component';
+import { SnackBarComponent } from './components/helpers/snack-bar/snack-bar.component';
 
 //SERVICES
 import { TestService } from './services/test/test.service';
@@ -61,6 +68,16 @@ import { UserService } from './services/user/user.service';
 import { SocketService } from './services/socket/socket.service';
 import { QuestionEditComponent } from './components/question-edit/question-edit.component';
 import { AnswerEditComponent } from './components/answer-edit/answer-edit.component';
+import { TestFilterComponent } from './components/filters/test-filter/test-filter.component';
+import { UserFilterComponent } from './components/filters/user-filter/user-filter.component';
+import { MockTestService } from './services/mock-test/mock-test.service';
+import { TestTreeComponent } from './components/test-tree/test-tree.component';
+import { TreeTestService } from './services/treeTest/tree-test.service';
+import { CountChildrenComponent } from './components/count-children/count-children.component';
+import { ShowTimeComponent } from './components/helpers/show-time/show-time.component';
+import { LoadingComponent } from './components/helpers/loading/loading.component';
+import { DialogComponent } from './components/helpers/dialog/dialog.component';
+import { QuestionNavComponent } from './components/question-nav/question-nav.component';
 
 @NgModule({
   declarations: [
@@ -91,6 +108,15 @@ import { AnswerEditComponent } from './components/answer-edit/answer-edit.compon
     StoperComponent,
     QuestionEditComponent,
     AnswerEditComponent,
+    TestFilterComponent,
+    UserFilterComponent,
+    TestTreeComponent,
+    CountChildrenComponent,
+    ShowTimeComponent,
+    SnackBarComponent,
+    DialogComponent,
+    LoadingComponent,
+    QuestionNavComponent,
   ],
   imports: [
     // GENERAL
@@ -114,10 +140,18 @@ import { AnswerEditComponent } from './components/answer-edit/answer-edit.compon
     MatFormFieldModule,
     MatCheckboxModule,
     MatIconModule,
+    MatTreeModule,
+    MatAutocompleteModule,
+    MatSnackBarModule,
+    MatProgressSpinnerModule,
+    MatDialogModule,
+    MatToolbarModule,
+
+    //service worker
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   //SERVICES
-  providers: [TestService, UtilService, AuthService, StorageService, UserService, SocketService],
+  providers: [TestService, MockTestService, TreeTestService, UtilService, AuthService, StorageService, UserService, SocketService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

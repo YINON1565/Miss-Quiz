@@ -1,12 +1,47 @@
-<section class="answer-edit" [class.is-correct]="correctAnswerIds.includes(answer._id)">
-    <button (click)="removeAnswer.emit(answerIdx)">X</button>
-    <section>
-        <h2>answerContent: {{answer.answerContent}}</h2>
-        <input type="text" [(ngModel)]="answer.answerContent">
-    </section>
-    <section>
-        <h2>Is Correct?</h2>
-        <input (click)="onCheckedCorrect.emit(answer._id)" type="button" value="correct answer">
-        <!-- <input  (change)="onCheckedCorrect.emit(answer._id)" type="checkbox" [(ngModel)]="answer.isCorrect"> -->
-    </section>
+<section
+  class="answer-edit flex bet"
+  [class.is-correct]="correctAnswerIds.includes(answer._id)"
+>
+  <section class="flex a-center m-b-end-2ch">
+    <mat-checkbox
+      [matTooltip]="
+        correctAnswerIds.includes(answer._id)
+          ? 'בטל סימון תשובה נכונה'
+          : 'סמן כתשובה נכונה'
+      "
+      color="warn"
+      [ngModel]="correctAnswerIds.includes(answer._id)"
+      (change)="onCheckedCorrect.emit(answer._id)"
+      name="isMultipleChoice"
+    >
+    </mat-checkbox>
+    <!-- < > -->
+    <mat-form-field>
+      <mat-label>תוכן התשובה</mat-label>
+      <input
+        class="input-answer-content"
+        type="text"
+        matInput
+        placeholder="הזן את תוכן התשובה"
+        [(ngModel)]="answer.answerContent"
+        name="answerContent"
+      />
+      <mat-icon matSuffix>mode_edit</mat-icon>
+    </mat-form-field>
+  </section>
+  <button
+    mat-icon-button
+    matTooltip="הסרת התשובה"
+    (click)="removeAnswer.emit(answerIdx)"
+  >
+    <mat-icon>remove</mat-icon>
+  </button>
+  <!-- <h5>
+    Is Correct?
+    <input
+      (click)="onCheckedCorrect.emit(answer._id)"
+      type="button"
+      value="correct answer"
+    />
+  </h5> -->
 </section>

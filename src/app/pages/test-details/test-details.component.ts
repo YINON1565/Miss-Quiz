@@ -7,6 +7,7 @@ import { TestActivity } from 'src/app/interfaces/test-activity';
 import { User } from 'src/app/interfaces/user';
 import { UserTest } from 'src/app/interfaces/user-test';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { PushNotficationService } from 'src/app/services/push-notfication/push-notfication.service';
 import { TestService } from 'src/app/services/test/test.service';
 import { UserService } from 'src/app/services/user/user.service';
 
@@ -22,15 +23,21 @@ export class TestDetailsComponent implements OnInit, OnDestroy {
     private _location: Location,
     private _testService: TestService,
     private _userService: UserService,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _pushNotfication: PushNotficationService
   ) {}
+
+  public onToggleLoading() {
+    this._pushNotfication.toggleLoading.next();
+  }
 
   public test: Test;
   public user: User;
   public userTest: UserTest;
 
   public isTestChange: boolean = false;
-  public isStartQuiz: boolean = false;
+  public isStartQuiz: boolean = true;
+  // public isStartQuiz: boolean = false;
 
   ngOnInit(): void {
     this._loadTest();
@@ -62,7 +69,6 @@ export class TestDetailsComponent implements OnInit, OnDestroy {
           userTest = this._BuildUserTest();
           this.user.tests.push(userTest);
           this.updateUser();
-          
         }
         this.userTest = userTest;
       });
@@ -73,9 +79,7 @@ export class TestDetailsComponent implements OnInit, OnDestroy {
     this._userService
       .updateUser(this.user)
       .pipe(first())
-      .subscribe((userUpdated) => {
-        // console.log(userUpdated, 'userUpdated in test details');
-      });
+      .subscribe((userUpdated) => {});
   }
 
   public updateScore() {
@@ -112,19 +116,40 @@ export class TestDetailsComponent implements OnInit, OnDestroy {
 
   public sendTest() {
     const { totalAnswered, questions } = this.userTest;
-    let isSend = true;
     if (totalAnswered < questions.length) {
-      isSend = confirm(
-        `You have ${
-          questions.length - totalAnswered
-        } more answers to answer, do you still send?`
-      );
+      this._pushNotfication
+        .openDialog({
+          message: `נשארו עדיין ${
+            questions.length - totalAnswered
+          } שאלות ללא מענה, האם בכל זאת להמשיך?`,
+          buttonText: {
+            ok: 'כן, להמשיך',
+            cancel: 'לחזור למבחן',
+          },
+        })
+        .afterClosed()
+        .subscribe((confirmed: boolean) => {
+          if (confirmed) {
+            this._goScorePage();
+          }
+        });
+    } else {
+      this._goScorePage();
     }
-    if (isSend) {
+  }
+
+  private _goScorePage() {
+    const snackBarRef = this._pushNotfication.openSnackBar(
+      'המבחן הוגש בהצלחה, מיד תועבר לתוצאות'
+    );
+    this._pushNotfication.toggleLoading.next()
+    setTimeout(() => {
+      snackBarRef.dismiss();
       this._router.navigate([
         `/user/${this.user._id}/score/${this.userTest.testId}`,
       ]);
-    }
+      this._pushNotfication.toggleLoading.next()
+    }, 1000);
   }
 
   public restartTest() {
@@ -146,8 +171,6 @@ export class TestDetailsComponent implements OnInit, OnDestroy {
     userTest.title = this.test.title;
     userTest.timeLimit = this.test.timeLimit;
     userTest.timeLeft = this.test.timeLimit;
-    console.log(userTest, 'userTest');
-
     return userTest;
   }
 
@@ -155,14 +178,12 @@ export class TestDetailsComponent implements OnInit, OnDestroy {
     const { activities } = this.test;
     const activity: TestActivity = this._buildTestActivity();
     const activityIdx = activities.findIndex((activity) => {
-      activity.userId === this.user._id;
+      return activity.userId === this.user._id;
     });
     activityIdx === -1
       ? activities.push(activity)
       : activities.splice(activityIdx, 1, activity);
-    this._testService.saveTest(this.test).subscribe((updatedTest) => {
-      console.log(updatedTest, 'updatedTest in test details');
-    });
+    this._testService.saveTest(this.test).subscribe((updatedTest) => {});
   }
 
   private _buildTestActivity(): TestActivity {

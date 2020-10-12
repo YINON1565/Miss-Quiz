@@ -1,38 +1,58 @@
 <main class="width-container" *ngIf="test && user">
-  <h1>{{user._id === loggedinUser._id? 'שלום,': 'הדף של'}} {{ user.name }}</h1>
-  <a routerLink="/user/{{ user._id }}">חזור לכל המבחנים</a>
-  <a *ngIf="user._id === loggedinUser._id" routerLink="/test/{{ test._id }}"
-    >עבור למבחן</a
-  >
-  <h2>Your score: {{ score }}</h2>
-  <h3>totalCorrectAnswered: {{ userTest.totalCorrectAnswered }}</h3>
-  <h2 *ngIf="userTest.totalAnswered">
-    Score from the answers you gave:
-    {{ scoreFromAnswered }}
-  </h2>
-  <h3>
-    totalAnswered: {{ userTest.totalAnswered }} /
-    {{ userTest.questions.length }}
-  </h3>
-  <h3>Time Left: {{ userTest.timeLeft }}</h3>
+  <div>
+    <div class="flex bet a-center">
+      <h2 class="hellow-user">
+        {{ user._id === loggedinUser._id ? "שלום," : "הדף של" }} {{ user.name }}
+      </h2>
+      <div class="links-container">
+        <a mat-flat-button routerLink="/user/{{ user._id }}">לכל המבחנים</a>
+        <a
+          class="m-i-start-1ch"
+          mat-flat-button
+          *ngIf="user._id === loggedinUser._id"
+          routerLink="/test/{{ test._id }}"
+          >גש למבחן</a
+        >
+      </div>
+    </div>
+    <div>
+      <h1>ניתוח תוצאות המבחן שלך</h1>
+      <h2>
+        הציון שלך: {{ score }}
+        <span
+          class="score-from-answered"
+          *ngIf="userTest.totalAnswered && score !== scoreFromAnswered"
+        >
+          ( מתוך השאלות שענית:
+          {{ scoreFromAnswered }}
+          )
+        </span>
+      </h2>
+      <h3 *ngIf="userTest.timeLimit">
+        עשית מבחן זה תוך:
+        <show-time [time]="userTest.timeLimit - userTest.timeLeft"></show-time>
+      </h3>
+    </div>
 
-  <section *ngIf="test.activities.length; else noActivities">
-    <h2>מספר הניגשים למבחן זה: {{ test.activities.length }}</h2>
-    <h2>ממוצע ציונים למבחן זה: {{ scoreAvarage }}</h2>
-    <quiz-chart [chart]="avarageScoreChart"></quiz-chart>
-  </section>
-
-  <ng-template #noActivities>
-    <h2>אין נבחנים עדיין</h2>
-  </ng-template>
-
-  <section>
-    <h2>ניתוח המבחן שלך</h2>
-    <quiz-chart [chart]="correctChart"></quiz-chart>
-    <quiz-chart [chart]="timetTestChart"></quiz-chart>
     <question-list
       [questions]="test.questions"
       [userQuestions]="userTest.questions"
     ></question-list>
-  </section>
+  </div>
+  <div></div>
+  <div class="chart-container">
+    <h2>סטטיסטיקות</h2>
+    <div class="score-avarage-container" *ngIf="test.activities.length > 1">
+      <h3>
+        הציון הממוצע: {{ scoreAvarage }}
+        <span>
+          (
+          {{ test.activities.length }} <mat-icon>people</mat-icon> )
+        </span>
+      </h3>
+      <quiz-chart class="quiz-chart" [chart]="avarageScoreChart"></quiz-chart>
+    </div>
+    <quiz-chart class="quiz-chart" [chart]="correctChart"></quiz-chart>
+    <quiz-chart class="quiz-chart" [chart]="timetTestChart"></quiz-chart>
+  </div>
 </main>

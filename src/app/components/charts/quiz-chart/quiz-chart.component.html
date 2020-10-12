@@ -1,9 +1,20 @@
-<select *ngIf="chart.chartTypes" [(ngModel)]="typeDynamic">
+<!-- <select *ngIf="chart.chartTypes" [(ngModel)]="typeDynamic">
   <option *ngFor="let type of chart.chartTypes" [value]="type" >{{type}}</option>
-</select>
+</select> -->
+
+<h2>{{ chart.options.title }}</h2>
+
+<mat-form-field appearance="fill">
+  <mat-label>Favorite Chart</mat-label>
+  <mat-select [(value)]="typeDynamic" panelClass="select-type">
+    <!-- <mat-option></mat-option> -->
+    <mat-option [value]="type" *ngFor="let type of chart.chartTypes">{{
+      type
+    }}</mat-option>
+  </mat-select>
+</mat-form-field>
 
 <section class="chart-container flex a-center j-center">
-  
   <google-chart
     *ngIf="chart"
     class="chart"
@@ -12,11 +23,10 @@
     [data]="chart.data"
     [options]="chart.options"
     [dynamicResize]="true"
-
     (ready)="isReady = true"
     style="width: 100%; height: 100%"
-    >
+  >
   </google-chart>
-
-  <img *ngIf="!isReady" src="assets/svg/loading.svg" />
+  <mat-spinner *ngIf="!isReady" color="warn"></mat-spinner>
+  <!-- <img *ngIf="!isReady" src="../../../../assets/svg/loading.svg" /> -->
 </section>

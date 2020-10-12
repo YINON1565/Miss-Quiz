@@ -1,8 +1,20 @@
 .answer-edit {
     padding: 10px;
     margin-top: 10px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+    // opacity: .6;
+    border-radius: 3px;
+    transition: background-color .3s;
+    >section {
+        flex-basis: 95%;
+        .mat-form-field {
+            flex-basis: 95%;
+        }
+    }
+    // > button {
+    //     flex-basis: 10%;
+    // }
     &.is-correct {
-        background-color: red;
+        background-color: rgba(0, 0, 0, 0.3);
+        // opacity: 1;
     }
 }

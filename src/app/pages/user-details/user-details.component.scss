@@ -1,12 +1,33 @@
 main {
+    h2 {
+        // margin: 0;
+        opacity: .6;
+        transition:  opacity .5s;
+        &.hidden {
+            opacity: 0;
+        }
+    }
+    header {
+        position: relative;
+        height: 100px;
+        .filter {
+            transition: width .3s;
+            width: 50%;
+            position: absolute;
+            left: 0;
+            &.focus {
+                width: 100%;
+            }
+        }
+    }
     .test-list {
         // background-color: red;
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
         gap: 10px;
         .test-preview {
             cursor: pointer;
-            height: 200px;
+            height: 150px;
             border-radius: 3px;
             // width: 300px;
             // background-color: blue;

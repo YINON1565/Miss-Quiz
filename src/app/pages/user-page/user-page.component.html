@@ -1,3 +1,11 @@
-<main class="width-container">
-  <user-list class="user-list" *ngIf="users" [users]="users"></user-list>
+<main class="width-container flex a-center j-center">
+  <test-filter
+    class="w100"
+    (emitFilter)="setFilter($event)"
+    [filterBy]="filterBy"
+    [options]="options"
+    [label]="'חפש אנשי קשר'"
+    [placeholder]="'לדוגמא: דוד הנדלר'"
+  ></test-filter>
+  <!-- <user-list class="user-list" *ngIf="users" [users]="users"></user-list> -->
 </main>

@@ -1,9 +1,7 @@
 @import '../../../styles/global.scss';
 
 form {
-    * {
-        direction: rtl;
-    }
+    background-color: white;
 
     .mat-form-field {
         // :host-context() {
@@ -24,14 +22,15 @@ form {
         transform: translate(-50%, -30%);
     }
     border-radius: 3px;
-}
-
-input:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0px 30px white inset !important;
-    // -webkit-text-fill-color: black !important;
-    transition: -webkit-box-shadow 0.3s;
-    // &::placeholder {
-    //     color: black;
-    //     opacity: 0.6;
-    // }
+    
+    input:-webkit-autofill {
+        -webkit-box-shadow: 0 0 0px 30px white inset !important;
+        // -webkit-text-fill-color: black !important;
+        transition: -webkit-box-shadow 0.3s;
+        // &::placeholder {
+        //     color: black;
+        //     opacity: 0.6;
+        // }
+    }
+    
 }

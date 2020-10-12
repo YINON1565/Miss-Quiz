@@ -34,21 +34,6 @@
   }
 }
 
-// RTL || LTR
-
-// $layout-direction: rtl !default;
-
-// @mixin ltr {
-//     @if $layout-direction == ltr {
-//         @content;
-//     }
-// }
-// @mixin rtl {
-//     @if $layout-direction == rtl {
-//         @content;
-//     }
-// }
-
 /* Media  Mixins */
 
 //aspect ratio mixin

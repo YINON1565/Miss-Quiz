@@ -1,6 +1,24 @@
-<main class="width-container">
-    <button routerLink="/test/edit">ADD QUIZ</button>
-    <!-- <section class="flex a-center j-center">
+<main class="width-container flex a-center j-center">
+  <section class="btn-container">
+    <button
+      [ngStyle]="{ height: '50px', width: '50px', 'line-height': '50px' }"
+      mat-icon-button
+      matTooltip="הוסף שאלון"
+      routerLink="/test/edit"
+    >
+      <mat-icon
+        [ngStyle]="{
+          'font-size': '50px',
+          color: 'white',
+          height: '50px',
+          width: '50px',
+          'line-height': '50px'
+        }"
+        >add_circle_outline</mat-icon
+      >
+    </button>
+  </section>
+  <!-- <section class="flex a-center j-center">
         <h2>is Sort? {{filterBy.isSort}}</h2>
         <input type="checkbox" [(ngModel)]="filterBy.isSort" (change)="onSelected()" name="" id="">
     </section>
@@ -10,5 +28,17 @@
             <option *ngFor="let option of selectOptions" [ngValue]="option.value">{{option.name}}</option>
         </select>
     </section> -->
-    <test-list class="test-list"[tests]="tests"></test-list>
+  <!-- <test-tree></test-tree> -->
+  <test-filter
+    class="w100"
+    (emitFilter)="setFilter($event)"
+    [filterBy]="filterBy"
+    [options]="options"
+    [label]="'חפש שאלונים'"
+    [placeholder]="'לדוגמא: בראשית'"
+  ></test-filter>
+  <!-- <section *ngIf="tests && tests.length" class="">
+    <h1>{{ tests.length }} תוצאות</h1>
+    <test-list class="test-list" [tests]="tests"></test-list>
+  </section> -->
 </main>

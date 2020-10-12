@@ -1,23 +1,51 @@
 <section class="question-edit">
-  <button (click)="removeQuestion.emit(question._id)">X</button>
-  <section>
-    <h2>questionContent: {{ question.questionContent }}</h2>
-    <input type="text" [(ngModel)]="question.questionContent" />
+  <button
+    matTooltip="הסרת השאלה"
+    class="remove-question-btn"
+    mat-icon-button
+    (click)="removeQuestion.emit(question._id)"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+  <section class="flex col">
+    <mat-form-field>
+      <mat-label>תוכן השאלה</mat-label>
+      <input
+        type="text"
+        matInput
+        placeholder="הזן את תוכן השאלה"
+        [(ngModel)]="question.questionContent"
+        name="questionContent"
+      />
+      <mat-icon matSuffix>mode_edit</mat-icon>
+    </mat-form-field>
+
+    <mat-checkbox
+      [matTooltip]="
+        question.isMultipleChoice ? 'הסר בחירה מרובה' : 'התר בחירה מרובה'
+      "
+      color="warn"
+      [(ngModel)]="question.isMultipleChoice"
+      (change)="onToggleIsMultipleChoice()"
+      name="isMultipleChoice"
+    >
+      בחירה מרובה
+    </mat-checkbox>
   </section>
-  <section class="flex a-center">
-    <h2>isMultipleChoice: {{question.isMultipleChoice}}</h2>
-    <input type="checkbox" (change)="onToggleIsMultipleChoice()" [(ngModel)]="question.isMultipleChoice">
-  </section>
-  <section>
-    <button (click)="addAnswer()">Add Answer</button>
-    <answer-edit
-      (removeAnswer)="removeAnswer($event)"
-      (onCheckedCorrect)="checkedCorrect($event)"
-      *ngFor="let answer of question.answers; let idx = index"
-      [answer]="answer"
-      [answerIdx]="idx"
-      [isMultipleChoice]="question.isMultipleChoice"
-      [correctAnswerIds]="question.correctAnswerIds"
-    ></answer-edit>
+  <section class="asnwer-edit-container">
+    <button class="mat-btn-large" mat-flat-button (click)="addAnswer()">
+      הוסף תשובה
+    </button>
+    <ul class="flex col">
+      <answer-edit
+        (removeAnswer)="removeAnswer($event)"
+        (onCheckedCorrect)="checkedCorrect($event)"
+        *ngFor="let answer of question.answers; let idx = index"
+        [answer]="answer"
+        [answerIdx]="idx"
+        [isMultipleChoice]="question.isMultipleChoice"
+        [correctAnswerIds]="question.correctAnswerIds"
+      ></answer-edit>
+    </ul>
   </section>
 </section>

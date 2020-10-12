@@ -1,0 +1,64 @@
+<nav class="container-index flex bet">
+  <button
+    mat-button
+    [disabled]="currQuestionIdx === 0"
+    (click)="emitChangeCurrQuestionIdx.emit(-1)"
+  >
+    <mat-icon>chevron_right</mat-icon>
+  </button>
+  <ul class="flex bet a-center">
+    <li
+      *ngFor="let q of questions; let i = index"
+      class="flex a-center j-center"
+      [class.curr-question]="i === currQuestionIdx"
+      (click)="emitChangeCurrQuestionIdx.emit(i - currQuestionIdx)"
+    >
+      {{ i + 1 }}
+    </li>
+  </ul>
+  <button
+    mat-button
+    [disabled]="currQuestionIdx === questions.length - 1"
+    (click)="emitChangeCurrQuestionIdx.emit(1)"
+  >
+    <mat-icon>chevron_left</mat-icon>
+  </button>
+</nav>
+
+<!-- <nav class="container-index flex bet">
+    <button
+      mat-button
+      [disabled]="currQuestionIdx === 0"
+      (click)="changeCurrQuestionIdx(-1)"
+    >
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+    <ul class="flex bet a-center">
+      <li
+        class="flex a-center j-center"
+        *ngFor="let q of userQuestions; let i = index"
+        (click)="changeCurrQuestionIdx(i - currQuestionIdx)"
+        [ngClass]="{
+          active: isActive,
+          visited: q.timePassed,
+          'curr-question': i === currQuestionIdx,
+          answered: q.answeredIds.length,
+          'complete-answered':
+            q.answeredIds.length === questions[i].correctAnswerIds.length,
+          'too-much-answered':
+            q.answeredIds.length > questions[i].correctAnswerIds.length,
+          'half-correct-answered': q.score > 0 && q.score < 1,
+          'correct-answered': q.score === 1
+        }"
+      >
+        {{ i + 1 }}
+      </li>
+    </ul>
+    <button
+      mat-button
+      [disabled]="currQuestionIdx === userQuestions.length - 1"
+      (click)="changeCurrQuestionIdx(1)"
+    >
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+  </nav> -->

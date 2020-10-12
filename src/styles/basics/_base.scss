@@ -1,4 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+
 body {
+    color: white;
+    font-family: Suez One, Rubik, Arial, sans-serif;
+    transition: background-color 2s;
     overflow-x: hidden;
     margin: 0;
     scroll-behavior: smooth;
@@ -36,7 +41,6 @@ body {
         //   outline: 1px solid slategrey;
     }
 }
-
 
 a {
     text-decoration: none;

@@ -1,7 +1,14 @@
 <!-- <test-page class="width-container"></test-page> -->
 <main-header></main-header>
-<section class="width-container flex bet a-center">
+<!-- <section class="width-container flex bet a-center">
     <button  (click)="goBack()">Go Back</button>
     <h3>connecteds: {{connecteds}}</h3>
-</section>
-<router-outlet (activate)="onActivate($event)"></router-outlet>
+</section> -->
+
+<!-- [ngStyle]="{
+  'background-color': backgroundColor,
+  transition: 'background-color 2s'
+}" -->
+<router-outlet
+  (activate)="onActivate($event)"
+></router-outlet>

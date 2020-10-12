@@ -1,6 +1,23 @@
-.is-answered{
-    background-color: lightcoral;
-    &.is-correct {
-        background-color: greenyellow;
+h3 {
+    transition: background-color 0.2s;
+    &:hover:not(.isScore) {
+        cursor: pointer;
+        background-color: rgba(0, 0, 0, 0.2);
+    }
+    padding: 5px;
+    border-radius: 3px;
+    height: 45px;
+    margin: 0;
+    &.is-score {
+        opacity: 0.6;
+        &.is-answered {
+            font-size: 1.2em;
+            // background-color: white;
+            // color: black;
+            opacity: 0.4;
+        }
+        &.is-correct {
+            opacity: 1;
+        }
     }
 }

@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { timer } from 'rxjs';
-import { UtilService } from 'src/app/services/util/util.service';
 
 @Component({
   selector: 'stoper',
@@ -12,12 +11,8 @@ export class StoperComponent implements OnInit {
   @Input() timePassed: number;
   @Output() updateTime = new EventEmitter<number>();
  
-  constructor(private _utilService : UtilService) {}
+  constructor() {}
 
-  public get timeForShow(): string {
-    return this._utilService.padNum(Math.floor(this.timePassed / 60)) + ':' +  this._utilService.padNum(this.timePassed % 60);
-  }
-  
   ngOnInit(): void {
     this.observableStoper();
   }

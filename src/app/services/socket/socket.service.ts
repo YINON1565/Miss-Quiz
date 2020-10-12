@@ -31,11 +31,6 @@ export class SocketService {
   }
 
   public emit(eventName, data = null) {
-    console.log(eventName, 'eventName');
-    console.log(data, 'data');
-    console.log(this._socket, 'this._socket');
-    
-    
     this._socket.emit(eventName, data);
   }
 }

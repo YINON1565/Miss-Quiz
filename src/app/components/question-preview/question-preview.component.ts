@@ -19,6 +19,8 @@ export class QuestionPreviewComponent implements OnInit, OnChanges {
   @Input() userQuestion: UserQuestion;
   @Input() isTimeLimit: boolean;
   @Input() isActive: boolean;
+  @Input() currQuestionIdx: number;
+  @Input() questionsLength: number;
   @Output() updateScore = new EventEmitter();
   constructor() {}
 
@@ -40,12 +42,12 @@ export class QuestionPreviewComponent implements OnInit, OnChanges {
 
   public cheackedAnswer(answerId: string): void {
     const { correctAnswerIds, isMultipleChoice } = this.question;
-    const {answeredIds} = this.userQuestion
+    const { answeredIds } = this.userQuestion;
     if (this.isTimeLimit || !this.isActive) return;
     if (isMultipleChoice) {
       // todo: limit check for correctAnswerIds.length
       const answeredIdx = answeredIds.findIndex((id) => id === answerId);
-      answeredIdx === -1 
+      answeredIdx === -1
         ? answeredIds.push(answerId)
         : answeredIds.splice(answeredIdx, 1);
     } else {
@@ -54,9 +56,18 @@ export class QuestionPreviewComponent implements OnInit, OnChanges {
         : answeredIds.splice(0, 1, answerId);
     }
     this.userQuestion.score =
-      correctAnswerIds.reduce((sum, correctAnswerId) => {
-        return answeredIds.includes(correctAnswerId) ? (sum = sum + 1) : sum;
-      }, 0) / correctAnswerIds.length;
+      answeredIds.length >= 2 * correctAnswerIds.length
+        ? 0
+        : correctAnswerIds.reduce((sum, correctAnswerId) => {
+            return answeredIds.includes(correctAnswerId)
+              ? (sum = sum + 1)
+              : sum;
+          }, 0) /
+            correctAnswerIds.length -
+          (answeredIds.length > correctAnswerIds.length
+            ? (answeredIds.length - correctAnswerIds.length) /
+              correctAnswerIds.length
+            : 0);
     this.updateScore.emit();
   }
 }

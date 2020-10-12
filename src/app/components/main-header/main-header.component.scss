@@ -1,10 +1,11 @@
 @import "../../../styles.scss";
 
 .main-header {
+    // background-color: white;
+    background-color: #0000001a;
     position: sticky;
     overflow: hidden;
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.342);
-    background-color: white;
     width: 100%;
     top: 0;
     z-index: 10;

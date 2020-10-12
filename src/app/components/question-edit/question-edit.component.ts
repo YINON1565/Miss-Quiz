@@ -31,8 +31,6 @@ export class QuestionEditComponent implements OnInit {
   }
 
   public checkedCorrect(answerId: string) {
-    console.log(answerId, 'answerId');
-    
     if (this.question.isMultipleChoice) {
       const answerIdx = this.question.correctAnswerIds.findIndex(
         (id) => id === answerId
@@ -45,7 +43,5 @@ export class QuestionEditComponent implements OnInit {
         ? (this.question.correctAnswerIds.splice(0, 1))
         : this.question.correctAnswerIds.splice(0, 1, answerId);
     }
-    console.log(this.question.correctAnswerIds, 'this.question.correctAnswerIds');
-    
   }
 }

@@ -1,9 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
 
 import { Router } from '@angular/router';
 
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { StorageService } from '../storage/storage.service';
@@ -12,7 +16,9 @@ import { User } from 'src/app/interfaces/user';
 import { UserLoginCred } from 'src/app/interfaces/user-login-cred';
 
 import { BASE_URL } from '../api/base-url';
-import { SocketService } from '../socket/socket.service';
+// import { SocketService } from '../socket/socket.service';
+
+import { PushNotficationService } from '../push-notfication/push-notfication.service';
 
 @Injectable({
   providedIn: 'root',
@@ -29,7 +35,8 @@ export class AuthService {
 
   constructor(
     private _storage: StorageService,
-    private _socket: SocketService,
+    private _pushNotfication: PushNotficationService,
+    // private _socket: SocketService,
     private _http: HttpClient,
     private _router: Router
   ) {
@@ -45,47 +52,27 @@ export class AuthService {
   }
 
   // MUTATIONS
-
-  private _handleLogin(user: User) {
-    try {
-      this._storage.storeSession(this.KEY_LOGGEDIN, user);
-      // this._socket.emit('updateConnecteds', 1);
-    } catch (err) {
-      console.log('ERROR IN _handleLogin', err);
-    }
+  private _handleLogin(user: User, type: string = 'logged') {
+    this._storage.storeSession(this.KEY_LOGGEDIN, user);
+    this._pushNotfication.openSnackBar(`${user.name} ${type} בהצלחה`)
   }
 
-  private _handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-      // TODO: send the error to remote logging infrastructure
-      console.log(error.error.error);
-      console.log(result, 'result');
-      // log to console instead
-
-      // TODO: better job of transforming error for user consumption
-      // this._log(`${operation} failed: ${error.message}`);
-
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
+  private _handleError<T>() {
+    return (res: HttpErrorResponse): Observable<T> => {
+      this._pushNotfication.openSnackBar(res.error)
+      return of(res.error);
     };
   }
 
-  // private _log(message: string) {
-  //   this.messageService.add(`HeroService: ${message}`);
-  // }
-
   // ACTINOS
-
   public login(userLoginCred: UserLoginCred) {
     return this._http.post<User>(`${this._url}/login`, userLoginCred).pipe(
       map((user: User) => {
-        this._handleLogin(user);
+        this._handleLogin(user, 'התחבר');
         this.userSubject.next(user);
         return user;
       }),
-      catchError(
-        this._handleError<User>(`login userLoginCred=${userLoginCred}`)
-      )
+      catchError(this._handleError<User>())
     );
   }
 
@@ -93,22 +80,21 @@ export class AuthService {
     sessionStorage.clear();
     return this._http.post<User>(`${this._url}/signup`, userCred).pipe(
       map((user: User) => {
-        this._handleLogin(user);
+        this._handleLogin(user, 'נרשם');
         this.userSubject.next(user);
         return user;
       }),
-      catchError(this._handleError<User>(`signup user=${this._url}`))
+      catchError(this._handleError<User>())
     );
   }
 
   public logout() {
     return this._http
       .post(`${this._url}/logout`, null, this._httpOptions)
-      .subscribe((res: any) => {
-        // const {message} = res
+      .subscribe((_) => {
+        this._pushNotfication.openSnackBar(`${this.userValue.name} התנתק בהצלחה`)
         sessionStorage.clear();
         this.userSubject.next(null);
-        // this._socket.emit('updateConnecteds', -1);
         this._router.navigate(['/login']);
       });
   }

@@ -1,18 +1,55 @@
-<!-- todo: chack is add isTimeLimit boolean -->
-  <stoper
-    *ngIf="!isTimeLimit && isActive"
-    [timePassed]="userQuestion.timePassed"
-    (updateTime)="updateTime($event)"
-  ></stoper>
-  <h5>timePassed: {{userQuestion.timePassed}}</h5>
-  <h2>שם השאלה: {{ question.questionContent }}</h2>
-  <h1 *ngIf="userQuestion.timePassed || userQuestion.timePassed === 0">
-    userQuestion.timePassed: {{ userQuestion.timePassed }}
-  </h1>
-  <answer-list
-    (cheackedAnswer)="cheackedAnswer($event)"
-    [answers]="question.answers"
-    [answeredIds]="userQuestion.answeredIds"
-    [correctAnswerIds]="question.correctAnswerIds"
-    [isActive]="isActive"
-  ></answer-list>
+<stoper
+  *ngIf="!isTimeLimit && isActive"
+  [timePassed]="userQuestion.timePassed"
+  (updateTime)="updateTime($event)"
+></stoper>
+
+<h1 class="flex a-center bet">
+  {{ currQuestionIdx + 1 }}.
+  {{ question.questionContent }}
+  <mat-icon
+  [color]="userQuestion.score === 1? 'accent': 'warn'"
+    [ngStyle]="{
+      'font-size': '50px',
+      'background-color': 'white',
+      'border-radius': '50%',
+      padding: '5px',
+      'line-height': '50px',
+      height: 'auto',
+      width: 'auto'
+    }"
+    *ngIf="!isActive"
+    >{{
+      userQuestion.score
+        ? userQuestion.score === 1
+          ? "done"
+          : "close done"
+        : "close"
+    }}</mat-icon
+  >
+</h1>
+
+<h3 *ngIf="isActive; else isScore">
+  <ng-container
+    *ngIf="question.correctAnswerIds.length === 1; else multipleAnswers"
+    >סמן תשובה אחת בלבד
+  </ng-container>
+  <ng-template #multipleAnswers
+    >סמן {{ question.correctAnswerIds.length }} תשובות</ng-template
+  >
+</h3>
+
+<ng-template #isScore>
+  <h3>
+    שהית בשאלה זו: <show-time [time]="userQuestion.timePassed"></show-time>
+  </h3>
+  <h3>ניקוד עבור שאלה זו: {{ userQuestion.score * 100 }}%</h3>
+</ng-template>
+
+<answer-list
+  (cheackedAnswer)="cheackedAnswer($event)"
+  [answers]="question.answers"
+  [answeredIds]="userQuestion.answeredIds"
+  [correctAnswerIds]="question.correctAnswerIds"
+  [isActive]="isActive"
+></answer-list>

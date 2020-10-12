@@ -1,22 +1,48 @@
 <nav class="width-container flex bet">
-  <a class="logo" routerLink="/" title="Home"
-    ><img src="assets/svg/puzzle-piece.svg" alt="Quiz" /> <span class="m-i-start-1ch">QUIZ</span>.
+  <a class="logo" routerLink="/" matTooltip="דף הבית"
+    ><img src="assets/svg/puzzle-piece.svg" alt="Quiz" />
+    <span class="m-i-start-1ch">חידודון</span>.
   </a>
   <div class="nav-link-container flex a-cente">
     <!-- <div class="nav-link-container flex col" [class.open-menu]="isOpenMenu"> -->
-    <a
+    <!-- <a
       routerLinkActive="active"
       [routerLinkActiveOptions]="{ exact: true }"
       routerLink="/"
       ><span>Home</span></a
+    > -->
+    <a
+      mat-button
+      routerLinkActive="active"
+      routerLink="/test"
+      matTooltip="שאלונים"
     >
-    <a routerLinkActive="active" routerLink="/test"><span>Quiz</span></a>
-    <a routerLinkActive="active" routerLink="/user"><span>Users</span></a>
-    <!-- <a routerLinkActive="active" routerLink="/results"><span>Results</span></a> -->
-    <a routerLinkActive="active" *ngIf="!isLoggedinUser ; else loggedinUser" routerLink="/login">SignUp</a>
+      <mat-icon> school </mat-icon>
+    </a>
+    <a
+      mat-button
+      routerLinkActive="active"
+      routerLink="/user"
+      matTooltip="משתמשים"
+    >
+      <mat-icon> people </mat-icon>
+    </a>
+    <button
+      mat-button
+      routerLinkActive="active"
+      *ngIf="!isLoggedinUser; else loggedinUser"
+      routerLink="/login"
+      matTooltip="התחבר"
+    >
+      <mat-icon> login </mat-icon>
+    </button>
     <ng-template #loggedinUser>
-      <a (click)="onLogout()">Logout</a>
+      <button matTooltip="התנתק" mat-button (click)="onLogout()">
+        <mat-icon> logout </mat-icon>
+      </button>
     </ng-template>
-    
+    <button matTooltip="שינוי שפה" mat-button (click)="onToggleLang()">
+      <mat-icon>language</mat-icon>
+    </button>
   </div>
 </nav>

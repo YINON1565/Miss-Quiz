@@ -7,3 +7,44 @@
 .correct-answered {
     background-color: green;
 }
+
+.hellow-user {
+    opacity: .7;
+}
+
+.links-container {
+    :first-child {
+     margin: 0 10px 0;   
+    }
+}
+
+h2, h3 {
+    .span {
+        opacity: .6;
+    }
+}
+.chart-container {
+    
+    .score-avarage-container {
+        // height: 300px;
+        h3 {
+            
+            padding: 5px;
+            // flex-basis: 20%;
+            span {
+                white-space: nowrap;
+                .mat-icon {
+                    vertical-align: middle;
+                }
+            }
+        }
+        .quiz-chart {
+            flex-basis: 60%;
+            width: 100%;
+        }
+    }
+    
+    .quiz-chart {
+        width: 100%;
+    }
+}

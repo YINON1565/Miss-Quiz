@@ -3,18 +3,49 @@
   class="width-container"
   [ngClass]="{ disable: test.timeLimit && !userTest.timeLeft }"
 >
-  <h1>שם המבחן: {{ test.title }}</h1>
-  <ng-container *ngIf="!isStartQuiz; else startQuiz">
-    <button (click)="isStartQuiz = true">Start Quiz</button>
-  </ng-container>
-  <ng-template #startQuiz>
+<a mat-fab color="basic" matTooltip="עריכת השאלון" class="edit-btn" [routerLink]="'/test/edit/' + test._id">
+  <mat-icon>edit</mat-icon>
+</a>
+  <h1>
+    {{ test.title }}
+    <span>
+      (
+      <ng-container *ngIf="isStartQuiz">
+        ענית על {{ userTest.totalAnswered }} /
+      </ng-container>
+      {{ test.questions.length }} שאלות)
+    </span>
+  </h1>
+  <!-- <ng-container > -->
+  <section class="btn-wrapper flex a-center j-center">
+    <button
+      [ngClass]="{ 'ng-hide': isStartQuiz }"
+      mat-button
+      (click)="isStartQuiz = true"
+    >
+      התחל את המבחן
+      <mat-icon
+        [ngStyle]="{
+          'font-size': '50px',
+          width: '50px',
+          height: '50px',
+          'line-height': '50px',
+          transform: 'rotate(180deg)'
+        }"
+        >play_circle_outline</mat-icon
+      >
+    </button>
+  </section>
+  <!-- </ng-container> -->
+  <!-- <ng-template #startQuiz> -->
+  <main class="flex col bet" *ngIf="isStartQuiz">
     <timer
       *ngIf="test.timeLimit"
       (updateTime)="updateTime($event)"
       [timeLeft]="userTest.timeLeft"
     ></timer>
-    <h3>סה"כ תשובות שנענו: {{ userTest.totalAnswered }}</h3>
-    <h3>סה"כ תשובות נכונות: {{ userTest.totalCorrectAnswered }}</h3>
+    <!-- <h3>סה"כ תשובות שנענו: {{ userTest.totalAnswered }}</h3>
+    <h3>סה"כ תשובות נכונות: {{ userTest.totalCorrectAnswered }}</h3> -->
     <question-list
       (updateScore)="updateScore()"
       [questions]="test.questions"
@@ -22,9 +53,21 @@
       [isActive]="true"
       [isTimeLimit]="test.timeLimit && !userTest.timeLeft"
     ></question-list>
-    <section class="flex a-center j-center">
-      <button (click)="restartTest()">אתחול המבחן</button>
-      <button (click)="sendTest()">הגשת המבחן / סיימתי</button>
+    <section class="flex a-center bet">
+      <button mat-stroked-button (click)="restartTest()">
+        <mat-icon>replay</mat-icon>
+        אתחול המבחן
+      </button>
+      <button
+        mat-flat-button
+        [disabled]="!userTest.totalAnswered"
+        (click)="sendTest()"
+      >
+        סיימתי
+        <mat-icon [ngStyle]="{ transform: 'rotate(180deg)' }">send</mat-icon>
+      </button>
     </section>
-  </ng-template>
+  </main>
+  <loading (click)="onToggleLoading()"></loading>
+  <!-- </ng-template> -->
 </section>

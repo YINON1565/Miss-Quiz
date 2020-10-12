@@ -19,5 +19,8 @@
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true
-  }
+  },
+  "plugins": [
+    {"name": "@angular/language-service"}
+]
 }

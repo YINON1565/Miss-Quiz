@@ -6,9 +6,9 @@
 >
   <mat-form-field appearance="legacy" *ngIf="isSignup">
     <mat-label>הזן שם משתמש</mat-label>
-    <input matInput type="text" formControlName="name" required />
+    <input matInput type="text" formControlName="name" autocomplete="off" required />
     <mat-error *ngIf="formGroup.controls['name'].invalid">
-      {{getError('name')}}
+      {{ getError("name") }}
     </mat-error>
   </mat-form-field>
 
@@ -20,9 +20,10 @@
       placeholder="pat@example.com"
       formControlName="email"
       required
+      autocomplete="off"
     />
     <mat-error *ngIf="formGroup.controls['email'].invalid">
-      {{getError('email')}}
+      {{ getError("email") }}
     </mat-error>
   </mat-form-field>
   <mat-form-field appearance="legacy">
@@ -32,6 +33,7 @@
       formControlName="password"
       [type]="hide ? 'password' : 'text'"
       required
+      autocomplete="new-password"
     />
     <button
       type="button"
@@ -44,7 +46,7 @@
       <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
     </button>
     <mat-error *ngIf="formGroup.controls['password'].invalid">
-      {{getError('password')}}
+      {{ getError("password") }}
     </mat-error>
   </mat-form-field>
   <section class="flex bet">
@@ -56,7 +58,12 @@
     >
       {{ isSignup ? "הרשם" : "התחבר" }}
     </button>
-    <button type="button" mat-button color="primary" (click)="isSignup = !isSignup">
+    <button
+      type="button"
+      mat-button
+      color="primary"
+      (click)="isSignup = !isSignup"
+    >
       {{ toggleIsSignUpBtnText }}
     </button>
   </section>

@@ -1,15 +1,32 @@
 <h3
   [ngClass]="{
+    'is-score': !isActive,
     'is-answered': answeredIds.includes(answer._id),
     'is-correct': correctAnswerIds.includes(answer._id)
   }"
   class="flex a-center"
 >
-  <span>{{ idx + 1 }}:</span>
+  <span class="m-i-end-1ch">{{ idx + 1 }}.</span>
   <my-checkbox
+    *ngIf="isActive"
     class="m-i-start-1ch m-i-end-1ch"
     [isChecked]="answeredIds.includes(answer._id)"
     [isDisabled]="!isActive"
   ></my-checkbox>
-  {{ answer.answerContent }}
+  <section class="w100 flex a-center">
+    <span class="m-i-end-3ch">
+      {{ answer.answerContent }}
+    </span>
+    <mat-icon
+      *ngIf="!isActive"
+      [ngStyle]="{'color': 'white'}"
+      >{{
+        correctAnswerIds.includes(answer._id)
+          ? "done"
+          : answeredIds.includes(answer._id)
+          ? "close"
+          : ""
+      }}</mat-icon
+    >
+  </section>
 </h3>

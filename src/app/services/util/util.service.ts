@@ -61,4 +61,24 @@ export class UtilService {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
   }
+
+  public getRandomColor(): string {
+    var letters = '0123456789ABCDEF'.split('');
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+  public getRandomSpecificColor(
+    color: string = '#E27240',
+    index: number = 3,
+    letters: string[] = '0123456789ABCDEF'.split('')
+  ): string {
+    return (
+      color.substring(0, index) +
+      letters[Math.floor(Math.random() * letters.length)] +
+      color.substring(index + 1, color.length)
+    );
+  }
 }

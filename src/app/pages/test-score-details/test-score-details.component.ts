@@ -5,6 +5,7 @@ import { Test } from 'src/app/interfaces/test';
 import { User } from 'src/app/interfaces/user';
 import { UserTest } from 'src/app/interfaces/user-test';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { ChartService } from 'src/app/services/chart/chart.service';
 import { TestService } from 'src/app/services/test/test.service';
 import { UserService } from 'src/app/services/user/user.service';
 
@@ -16,9 +17,10 @@ import { UserService } from 'src/app/services/user/user.service';
 export class TestScoreDetailsComponent implements OnInit {
   constructor(
     private _route: ActivatedRoute,
-    private _userService: UserService,
-    private _testService: TestService,
-    private _authService: AuthService
+    private _user: UserService,
+    private _test: TestService,
+    private _chart: ChartService,
+    private _auth: AuthService
   ) {}
 
   @ViewChild('currQuestionElement') currQuestionElement: ElementRef;
@@ -36,15 +38,16 @@ export class TestScoreDetailsComponent implements OnInit {
     const userId = this._route.snapshot.paramMap.get('u_id');
 
     forkJoin([
-      this._userService.getById(userId),
-      this._testService.getById(testId),
+      this._user.getById(userId),
+      this._test.getById(testId),
     ]).subscribe((results) => {
       this.test = results[1];
       this.user = results[0];
       this.userTest = this.user.tests.find((test) => test.testId === testId);
       this._setCharts();
       this.score = Math.round(
-        (this.userTest.totalCorrectAnswered / this.userTest.questions.length) * 100
+        (this.userTest.totalCorrectAnswered / this.userTest.questions.length) *
+          100
       );
       this.scoreFromAnswered = Math.round(
         (this.userTest.totalCorrectAnswered / this.userTest.totalAnswered) * 100
@@ -53,7 +56,7 @@ export class TestScoreDetailsComponent implements OnInit {
   }
 
   public get loggedinUser(): User {
-    return this._authService.userValue;
+    return this._auth.userValue;
   }
 
   public get scoreAvarage(): number {
@@ -76,88 +79,52 @@ export class TestScoreDetailsComponent implements OnInit {
   private _setCharts() {
     const { totalAnswered, totalCorrectAnswered, questions } = this.userTest;
 
-    this.correctChart = {
-      chartTypes: [
+    this.correctChart = this._chart.getChart(
+      'ניתוח פתרון המבחן',
+      ['', ''],
+      [
+        ['תשובות נכונות', totalCorrectAnswered],
+        ['תשובות שגויות', totalAnswered - totalCorrectAnswered],
+        ['אין תשובות', questions.length - totalAnswered],
+      ],
+      'BarChart',
+      '',
+      '',
+      null,
+      null,
+      [
         'BarChart',
         'PieChart',
         'ColumnChart',
         'ScatterChart',
         'SteppedAreaChart',
+      ]
+    );
+
+    this.timetTestChart = this._chart.getChart(
+      'היסטוריית התפלגות ציונים',
+      ['זמן (בשניות)', 'מספר שאלה'],
+      [...questions.map((q, i) => [i + 1, q.timePassed])],
+      'SteppedAreaChart',
+      'זמן (בשניות)',
+      'מספר שאלה',
+      0
+    );
+
+    this.avarageScoreChart = this._chart.getChart(
+      'היסטוריית התפלגות ציונים',
+      ['תאריך', 'ניקוד'],
+      [
+        ...this.test.activities.map((act, i) => [
+          new Date(act.activeAt).toLocaleDateString(),
+          (act.totalCorrectAnswered / questions.length) * 100,
+        ]),
       ],
-      type: 'BarChart',
-      data: [
-        ['תשובות נכונות', totalCorrectAnswered],
-        ['תשובות שגויות', totalAnswered - totalCorrectAnswered],
-        ['אין תשובות', questions.length - totalAnswered],
-      ],
-      columnNames: ['', ''],
-      options: {
-        title: 'ניתוח פתרון המבחן',
-        is3D: true,
-        slices: [
-          { color: '#378ac5' },
-          { color: '#125e94' },
-          { color: '#7dbae6' },
-        ],
-        legend: 'none',
-        animation: {
-          duration: 1000,
-          easing: 'liner',
-          startup: true,
-        },
-      },
-    };
-    this.timetTestChart = {
-      chartTypes: [
-        'AreaChart',
-        'LineChart',
-        'ColumnChart',
-        'ScatterChart',
-        'SteppedAreaChart',
-      ],
-      type: 'SteppedAreaChart',
-      data: [...questions.map((q, i) => [i + 1, q.timePassed])],
-      columnNames: ['זמן (בשניות)', 'מספר שאלה'],
-      options: {
-        title: 'כמה זמן לקח לכל שאלה',
-        // colors: ['red'],
-        animation: { duration: 1000, easing: 'liner', startup: true },
-        legend: 'none',
-        vAxis: {
-          title: 'זמן (בשניות)',
-          titleTextStyle: { fontSize: 18 },
-        },
-        hAxis: {
-          title: 'מספר שאלה',
-          titleTextStyle: { fontSize: 18 },
-        },
-      },
-    };
-    this.avarageScoreChart = {
-      chartTypes: [
-        'AreaChart',
-        'LineChart',
-        'ColumnChart',
-        'ScatterChart',
-        'SteppedAreaChart',
-      ],
-      type: 'ScatterChart',
-      data: [...this.test.activities.map((act, i) => [new Date(act.activeAt).toLocaleDateString(), (act.totalCorrectAnswered / questions.length) * 100])],
-      columnNames: ['תאריך', 'ניקוד'],
-      options: {
-        title: 'היסטוריית התפלגות ציונים',
-        // colors: ['red'],
-        animation: { duration: 1000, easing: 'liner', startup: true },
-        legend: 'none',
-        vAxis: {
-          title: 'תאריך',
-          titleTextStyle: { fontSize: 18 },
-        },
-        hAxis: {
-          title: 'ניקוד',
-          titleTextStyle: { fontSize: 18 },
-        },
-      },
-    };
+      'ScatterChart',
+      'תאריך',
+      'ניקוד',
+      0,
+      100
+    );
   }
 }

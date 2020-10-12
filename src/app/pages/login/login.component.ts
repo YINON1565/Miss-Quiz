@@ -3,6 +3,7 @@ import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { PushNotficationService } from 'src/app/services/push-notfication/push-notfication.service';
 
 @Component({
   selector: 'login',
@@ -12,6 +13,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 export class LoginComponent implements OnInit {
   constructor(
     private _authService: AuthService,
+    private _push: PushNotficationService,
     private _router: Router
   ) {}
 
@@ -19,7 +21,6 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this._loadUser();
     this._authService.userValue ? this._router.navigate(['/']): ''
-    // this.userForm.valueChanges.subscribe(x=> console.log(x))
   }
 
   //STATE
@@ -105,7 +106,12 @@ export class LoginComponent implements OnInit {
 
   public onSubmit(NgForm: NgForm): void {
     const isValid = this.isSignup? this.registerForm.valid : this.loginForm.valid 
-    !isValid ? this._handleError(): this.isSignup? this._signup(): this._login();
+    if (isValid) {
+      this._push.toggleLoading.next()
+      this.isSignup? this._signup(): this._login();
+    } else {
+      this._handleError() 
+    }
   }
 
   private _signup(): void {
@@ -130,10 +136,11 @@ export class LoginComponent implements OnInit {
   }
 
   private _handleError(): void {
-    console.log('error');
-    
+    this._push.toggleLoading.next()
   }
+  
   private _handleSuccess(type: string, user?: User): void {
+    this._push.toggleLoading.next()
     switch (type) {
       case 'userRegistered':
         this._router.navigate(['/']);
